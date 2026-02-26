@@ -111,4 +111,28 @@ muscle-config/
 
 Contributions are welcome. Open an issue first to discuss what you'd like to change.
 
+**Steps:**
+
+1. Fork the repository
+2. Create a new branch: `git checkout -b feat/your-feature-name`
+3. Make your changes
+4. Commit using the format below
+5. Push to your branch: `git push origin feat/your-feature-name`
+6. Open a Pull Request
+
+**Commit format:**
+```
+type(scope): short description
+
+feat(generator): add Next.js scaffolding support
+fix(install): handle rollback on failed npm install
+docs(readme): update roadmap section
+```
+
+Types: `feat` · `fix` · `docs` · `refactor` · `chore`
+```
+
+And the commit name for adding this to the README:
+```
+
 <!-- --- -->
