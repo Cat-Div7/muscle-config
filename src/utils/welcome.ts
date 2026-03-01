@@ -2,21 +2,22 @@ import figlet from "figlet";
 import chalk from "chalk";
 import { createRequire } from "module";
 const require = createRequire(import.meta.url);
-const { version } = require("../../package.json");
+const { version }: { version: string } = require("../../package.json");
 
-export const sleep = (ms = 2000) => new Promise((r) => setTimeout(r, ms));
+export const sleep = (ms: number = 2000): Promise<void> =>
+  new Promise((r) => setTimeout(r, ms));
 
-function terminalLink(text, url) {
+function terminalLink(text: string, url: string): string {
   return `\u001B]8;;${url}\u0007${text}\u001B]8;;\u0007`;
 }
 
-export async function welcome() {
+export async function welcome(): Promise<void> {
   await sleep();
 
-  const data = await new Promise((resolve, reject) => {
+  const data: string = await new Promise((resolve, reject) => {
     figlet.text("MUSCLE CONFIG", { font: "Small" }, (err, result) => {
       if (err) reject(err);
-      else resolve(result);
+      else resolve(result || "");
     });
   });
 
@@ -24,9 +25,12 @@ export async function welcome() {
   console.log("\n");
   console.log(chalk.cyan(data));
 
-  const width = 62;
-  const divider = chalk.cyan("─".repeat(width));
-  const githubLink = terminalLink("Omar Ashraf", "https://github.com/Cat-Div7");
+  const width: number = 62;
+  const divider: string = chalk.cyan("─".repeat(width));
+  const githubLink: string = terminalLink(
+    "Omar Ashraf",
+    "https://github.com/Cat-Div7",
+  );
 
   console.log(divider);
   console.log(chalk.bold.white("  MC — MUSCLE CONFIG"));
