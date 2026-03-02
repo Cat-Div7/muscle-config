@@ -1,11 +1,20 @@
+import { execa } from "execa";
 import type { ProjectConfig } from "../config/projectConfig.js";
 
 export async function generateReactProject(config: ProjectConfig) {
-  console.log("Generating project with:", config);
+  const template =
+    config.framework === "react-ts" ? "react-ts" : "react";
 
-  if (config.framework === "react-ts") {
-    console.log("→ Setup React + TypeScript");
-  } else {
-    console.log("→ Setup React + JavaScript");
-  }
+  await execa(
+    "npm",
+    [
+      "create",
+      "vite@latest",
+      config.projectName,
+      "--",
+      "--template",
+      template,
+    ],
+    { stdio: "inherit" }
+  );
 }
