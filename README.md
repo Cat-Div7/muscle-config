@@ -168,6 +168,3 @@ docs(readme): update roadmap section
 
 Types: `feat` · `fix` · `docs` · `refactor` · `chore`
 ```
-
-And the commit name for adding this to the README:
-```
