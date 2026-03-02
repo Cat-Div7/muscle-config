@@ -6,7 +6,7 @@
 
 ---
 
-## Usage
+## Usage (Not Available for now)
 
 ```bash
 npx muscle-config
@@ -27,6 +27,43 @@ Instead of spending hours setting up a new project from scratch, `muscle-config`
 - Routing, state management, and service layers scaffolded out of the box
 
 ---
+
+## Local Development & How To Use
+
+Clone the repo and install dependencies:
+```bash
+# HTTP
+git clone https://github.com/Cat-Div7/muscle-config.git
+# SSH
+git clone git@github.com:Cat-Div7/muscle-config.git
+
+# Install Dependencies
+cd muscle-config
+npm install
+```
+
+Build and Run the project:
+```bash
+npm run build
+npm run start
+```
+
+Link globally to use the `muscle-config` command anywhere on your machine:
+```bash
+npm link
+```
+
+Now you can run:
+```bash
+muscle-config
+```
+
+To unlink when you're done:
+```bash
+npm unlink -g muscle-config
+```
+---
+
 
 ## 🛠 Supported Options
 
@@ -77,8 +114,8 @@ If anything fails mid-installation, `muscle-config` automatically rolls back and
 ## Roadmap
 
 - [x] React + TypeScript/JavaScript
-- [x] Tailwind, MUI, CSS Modules
-- [x] Feature-based and Layered architecture
+- [ ] Tailwind, MUI, CSS Modules
+- [ ] Feature-based and Layered architecture
 - [ ] Next.js support
 - [ ] Zustand + React Query setup
 - [ ] ESLint + Prettier pre-configured
@@ -134,5 +171,3 @@ Types: `feat` · `fix` · `docs` · `refactor` · `chore`
 
 And the commit name for adding this to the README:
 ```
-
-<!-- --- -->
