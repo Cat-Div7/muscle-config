@@ -167,4 +167,3 @@ docs(readme): update roadmap section
 ```
 
 Types: `feat` · `fix` · `docs` · `refactor` · `chore`
-```
