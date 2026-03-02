@@ -30,3 +30,7 @@ Thumbs.db
 
 # Project specific
 .config/
+
+# Dist and build directories
+dist/
+build/
