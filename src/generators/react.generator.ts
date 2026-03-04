@@ -15,8 +15,18 @@ export async function generateReactProject(config: ProjectConfig) {
 
   await execa(
     "npm",
-    ["create", "vite@latest", targetDir, "--", "--template", template],
-    { stdio: "inherit" },
+    [
+      "create",
+      "vite@latest",
+      targetDir,
+      "--",
+      "--template",
+      template,
+      "--no-interactive",
+    ],
+    {
+      stdio: "inherit",
+    },
   );
 
   logger.success("Project scaffolded successfully!");
