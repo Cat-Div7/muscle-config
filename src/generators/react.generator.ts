@@ -9,6 +9,11 @@ export async function generateReactProject(config: ProjectConfig) {
   const targetDir =
     config.directoryMode === "current" ? "." : config.projectName!;
 
+  const projectPath =
+    config.directoryMode === "current"
+      ? process.cwd()
+      : path.join(process.cwd(), config.projectName!);
+
   logger.info(
     `Creating project '${targetDir}' using template '${template}'...`,
   );
@@ -30,6 +35,14 @@ export async function generateReactProject(config: ProjectConfig) {
       { stdio: "ignore" },
     );
     spinner.succeed("Project scaffolded!");
+
+    // Installing dependencies
+    spinner.start("Installing dependencies — do not cancel this step...");
+    await execa("npm", ["install"], {
+      cwd: projectPath,
+      stdio: "ignore",
+    });
+    spinner.succeed("Dependencies installed!");
   } catch (error) {
     spinner.fail("Failed to scaffold project.");
     throw error;
