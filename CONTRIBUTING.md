@@ -28,4 +28,4 @@ docs(readme): update roadmap section
 refactor(prompts): simplify framework selection logic
 ```
 
-**Types**: `feat` · `fix` · `docs` · `refactor` · `chore`
+**Types**: `feat` · `fix` · `docs` · `refactor` · `chore` · `etc..`
