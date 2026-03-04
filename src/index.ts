@@ -2,5 +2,9 @@
 import { createProject } from "./commands/create.command.js";
 import { welcome } from "./utils/welcome.js";
 
-await welcome();
-await createProject();
+const main = async () => {
+  await welcome();
+  await createProject();
+};
+
+main();
