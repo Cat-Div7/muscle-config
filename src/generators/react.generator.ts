@@ -25,9 +25,9 @@ export async function generateReactProject(config: ProjectConfig) {
       "--no-interactive",
     ],
     {
-      stdio: "inherit",
+      stdio: "ignore",
     },
   );
 
-  logger.success("Project scaffolded successfully!");
+  logger.success("Project created successfully!");
 }
