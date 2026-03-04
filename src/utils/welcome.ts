@@ -4,7 +4,7 @@ import { createRequire } from "module";
 const require = createRequire(import.meta.url);
 const { version }: { version: string } = require("../../package.json");
 
-export const sleep = (ms: number = 2000): Promise<void> =>
+export const sleep = (ms: number = 1000): Promise<void> =>
   new Promise((r) => setTimeout(r, ms));
 
 function terminalLink(text: string, url: string): string {
