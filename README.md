@@ -130,15 +130,29 @@ If anything fails mid-installation, `muscle-config` automatically rolls back and
 ```
 muscle-config/
 ├── src/
-│   ├── index.js          # Entry point
-│   ├── prompts/          # CLI prompt definitions
-│   ├── generators/       # Scaffolding logic per option
-│   ├── templates/        # Static template files
-│   └── utils/
-│       ├── welcome.js    # CLI welcome screen
-│       ├── files.js      # File/folder helpers
-│       └── install.js    # Dependency installer
+│   ├── commands/
+│   │   └── create.command.ts     # Main create command orchestration
+│   ├── config/
+│   │   └── projectConfig.ts      # Project configuration types & defaults
+│   ├── generators/
+│   │   └── react.generator.ts    # React scaffolding logic per option
+│   ├── prompts/
+│   │   ├── framework.prompt.ts   # Framework selection prompt
+│   │   ├── directory.prompt.ts   # Output directory prompt
+│   │   └── projectName.prompt.ts # Project name prompt
+│   ├── templates/                # Static template files
+│   │   ├── react/
+│   │   ├── nextjs/
+│   │   └── shared/
+│   ├── utils/
+│   │   ├── welcome.ts            # CLI welcome screen
+│   │   ├── logger.ts             # Colored console output
+│   │   ├── spinner.ts            # Loading spinner helper
+│   │   ├── files.ts              # File/folder helpers
+│   │   └── install.ts            # Dependency installer
+│   └── index.ts                  # Entry point
 ├── package.json
+├── tsconfig.json
 └── README.md
 ```
 
