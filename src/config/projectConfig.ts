@@ -8,3 +8,15 @@ export interface ProjectConfig {
   directoryMode: DirectoryMode;
   styling: StylingChoice;
 }
+
+export interface TailwindConfig {
+  darkMode: false | "media" | "class";
+  darkModeToggle: boolean;
+
+  colorPreset: "indigo" | "emerald" | "neutral" | "custom" | "none";
+  customColor?: string;
+
+  font: "inter" | "poppins" | "cairo" | "none";
+
+  // plugins: string[];
+}

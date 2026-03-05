@@ -5,6 +5,9 @@ import { fileURLToPath } from "url";
 import { spinner } from "../utils/spinner.js";
 import { logger } from "../utils/logger.js";
 import type { Feature } from "./feature.interface.js";
+import { askTailwindConfig } from "../prompts/tailwind.prompt.js";
+import { generateIndexCss } from "../generators/css.generator.js";
+import { generateThemeToggle } from "../generators/toggle.generator.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -13,14 +16,28 @@ export const tailwindFeature: Feature = {
 
   async run(projectPath: string) {
     try {
-      // Install Tailwind v4 dependencies
+      /**
+       * STEP 1
+       * Ask the developer for Tailwind configuration options
+       * (dark mode, colors, fonts, plugins, etc.)
+       */
+      const config = await askTailwindConfig();
+
+      /**
+       * STEP 2
+       * Install Tailwind v4 and the Vite plugin
+       */
       spinner.start("Installing Tailwind v4...");
       await execa("npm", ["install", "tailwindcss", "@tailwindcss/vite"], {
         cwd: projectPath,
       });
       spinner.succeed("Tailwind installed!");
 
-      // Detect vite config extension
+      /**
+       * STEP 3
+       * Detect if the project uses TypeScript or JavaScript
+       * by checking which vite config file exists
+       */
       const tsConfigPath = path.join(projectPath, "vite.config.ts");
       const jsConfigPath = path.join(projectPath, "vite.config.js");
 
@@ -40,26 +57,83 @@ export const tailwindFeature: Feature = {
         }
       }
 
-      // Copy vite config from template
+      /**
+       * STEP 4
+       * Copy the correct vite.config template that already
+       * includes Tailwind's Vite plugin configuration
+       */
       spinner.start("Configuring Vite...");
+
       const templateDir = path.join(
         __dirname,
         "../templates/react/tailwind-v4",
       );
+
       const viteTemplatePath = path.join(
         templateDir,
         isTypeScript ? "vite.config.ts" : "vite.config.js",
       );
+
       await fs.copyFile(viteTemplatePath, viteConfigPath);
       spinner.succeed("Vite configured!");
 
-      // Copy index.css from template
-      spinner.start("Injecting Tailwind styles...");
-      const cssTemplatePath = path.join(templateDir, "index.css");
-      const cssPath = path.join(projectPath, "src/index.css");
-      await fs.copyFile(cssTemplatePath, cssPath);
-      spinner.succeed("Styles injected!");
+      /**
+       * STEP 5
+       * Generate the Tailwind CSS entry file dynamically
+       * based on the user's choices (font, colors, dark mode, etc.)
+       */
+      spinner.start("Generating Tailwind styles...");
 
+      const cssPath = path.join(projectPath, "src/index.css");
+
+      const cssContent = generateIndexCss(config);
+
+      await fs.writeFile(cssPath, cssContent);
+
+      spinner.succeed("Tailwind styles generated!");
+
+      /**
+       * STEP 6
+       * If the user selected "ThemeToggle"
+       * we generate a ready-to-use React component
+       */
+      if (config.darkModeToggle) {
+        spinner.start("Creating ThemeToggle component...");
+
+        const componentDir = path.join(projectPath, "src/components");
+
+        // ensure the components directory exists
+        await fs.mkdir(componentDir, { recursive: true });
+
+        const toggleFile = path.join(
+          componentDir,
+          isTypeScript ? "ThemeToggle.tsx" : "ThemeToggle.jsx",
+        );
+
+        const toggleContent = generateThemeToggle(isTypeScript);
+
+        await fs.writeFile(toggleFile, toggleContent);
+
+        spinner.succeed("ThemeToggle component created!");
+      }
+
+      /**
+       * STEP 7
+       * Install optional Tailwind plugins selected by the user
+       */
+      // if (config.plugins.length > 0) {
+      //   spinner.start("Installing Tailwind plugins...");
+
+      //   await execa("npm", ["install", ...config.plugins], {
+      //     cwd: projectPath,
+      //   });
+
+      //   spinner.succeed("Plugins installed!");
+      // }
+
+      /**
+       * FINAL SUCCESS MESSAGE
+       */
       logger.success("Tailwind v4 added successfully!");
     } catch (error) {
       spinner.fail("Failed to setup Tailwind.");
