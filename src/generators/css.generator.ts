@@ -7,8 +7,12 @@ export function generateIndexCss(config: TailwindConfig): string {
 
   if (config.font === "inter") {
     lines.push(
-      `@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');`
+      `@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');`,
     );
+  }
+
+  if (config.darkMode === "class") {
+    lines.push(`@custom-variant dark (&:where(.dark, .dark *));`);
   }
 
   lines.push("");

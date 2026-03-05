@@ -8,6 +8,7 @@ import type { Feature } from "./feature.interface.js";
 import { askTailwindConfig } from "../prompts/tailwind.prompt.js";
 import { generateIndexCss } from "../generators/css.generator.js";
 import { generateThemeToggle } from "../generators/toggle.generator.js";
+import { generateTailwindConfig } from "../generators/tailwind.config.generator.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -63,7 +64,6 @@ export const tailwindFeature: Feature = {
        * includes Tailwind's Vite plugin configuration
        */
       spinner.start("Configuring Vite...");
-
       const templateDir = path.join(
         __dirname,
         "../templates/react/tailwind-v4",
@@ -79,30 +79,40 @@ export const tailwindFeature: Feature = {
 
       /**
        * STEP 5
+       * Generate tailwind.config file dynamically
+       * based on the developer's selected options
+       * (dark mode strategy, theme extension, plugins)
+       */
+      spinner.start("Generating Tailwind config...");
+      const tailwindConfigPath = path.join(
+        projectPath,
+        isTypeScript ? "tailwind.config.ts" : "tailwind.config.js",
+      );
+
+      const tailwindConfigContent = generateTailwindConfig(config);
+
+      await fs.writeFile(tailwindConfigPath, tailwindConfigContent);
+      spinner.succeed("Tailwind config generated!");
+
+      /**
+       * STEP 6
        * Generate the Tailwind CSS entry file dynamically
        * based on the user's choices (font, colors, dark mode, etc.)
        */
       spinner.start("Generating Tailwind styles...");
-
       const cssPath = path.join(projectPath, "src/index.css");
-
       const cssContent = generateIndexCss(config);
-
       await fs.writeFile(cssPath, cssContent);
-
       spinner.succeed("Tailwind styles generated!");
 
       /**
-       * STEP 6
+       * STEP 7
        * If the user selected "ThemeToggle"
        * we generate a ready-to-use React component
        */
       if (config.darkModeToggle) {
         spinner.start("Creating ThemeToggle component...");
-
         const componentDir = path.join(projectPath, "src/components");
-
-        // ensure the components directory exists
         await fs.mkdir(componentDir, { recursive: true });
 
         const toggleFile = path.join(
@@ -111,14 +121,12 @@ export const tailwindFeature: Feature = {
         );
 
         const toggleContent = generateThemeToggle(isTypeScript);
-
         await fs.writeFile(toggleFile, toggleContent);
-
         spinner.succeed("ThemeToggle component created!");
       }
 
       /**
-       * STEP 7
+       * STEP 8
        * Install optional Tailwind plugins selected by the user
        */
       // if (config.plugins.length > 0) {
