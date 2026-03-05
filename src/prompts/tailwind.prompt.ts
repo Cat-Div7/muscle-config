@@ -21,9 +21,10 @@ export async function askTailwindConfig(): Promise<TailwindConfig> {
         name: "strategy",
         message: "Dark mode strategy:",
         choices: [
+          { name: "Manual toggle (class) — Recommended", value: "class" },
           { name: "System preference (media)", value: "media" },
-          { name: "Manual toggle (class)", value: "class" },
         ],
+        default: "class",
       },
     ]);
 

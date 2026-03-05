@@ -4,6 +4,7 @@ export function generateThemeToggle(isTypeScript: boolean): string {
 import { useState, useEffect } from "react";
 
 export default function ThemeToggle() {
+  // You can replace this with ContextAPI later
   const [dark, setDark] = useState(() => {
     return localStorage.getItem("theme") === "dark";
   });
