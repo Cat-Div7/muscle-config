@@ -23,7 +23,7 @@ Instead of spending hours setting up a new project from scratch, `muscle-config`
 - The right folder structure for your chosen architecture
 - All necessary dependencies installed
 - Config files pre-configured (TypeScript, ESLint, path aliases, etc.)
-- Component library setup (MUI, Tailwind, CSS Modules)
+- Component library setup (MUI, Tailwind, Normal CSS)
 - Routing, state management, and service layers scaffolded out of the box
 
 ---
@@ -71,7 +71,7 @@ npm unlink -g muscle-config
 |-------------------|--------------------------------------|
 | Framework         | React, Next.js                       |
 | Language          | TypeScript, JavaScript               |
-| Styling           | Tailwind CSS, MUI, CSS Modules       |
+| Styling           | Tailwind CSS, MUI, Normal CSS        |
 | Routing           | React Router DOM                     |
 | State Management  | Context API, Zustand                 |
 | Architecture      | Feature-based, Layered               |
@@ -114,7 +114,7 @@ If anything fails mid-installation, `muscle-config` automatically rolls back and
 ## Roadmap
 
 - [x] React + TypeScript/JavaScript
-- [ ] Tailwind, MUI, CSS Modules
+- [ ] Tailwind, MUI, Normal CSS
 - [ ] Feature-based and Layered architecture
 - [ ] Next.js support
 - [ ] Zustand + React Query setup
