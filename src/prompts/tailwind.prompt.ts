@@ -1,7 +1,65 @@
 import inquirer from "inquirer";
+import chalk from "chalk";
 import type { TailwindConfig } from "../config/projectConfig.js";
 
-export async function askTailwindConfig(): Promise<TailwindConfig> {
+const colorChoices = [
+  { name: chalk.bgHex("#6366f1").white("  indigo  ") + "  Indigo", value: "indigo" },
+  { name: chalk.bgHex("#10b981").black("  emerald ") + "  Emerald", value: "emerald" },
+  { name: chalk.bgHex("#737373").white("  neutral ") + "  Neutral", value: "neutral" },
+  { name: chalk.bgHex("#e11d48").white("  custom  ") + "  Custom HEX", value: "custom" },
+  { name: "  Skip", value: "none" },
+];
+
+async function askBeginner(): Promise<Partial<TailwindConfig>> {
+  const { wantDarkMode } = await inquirer.prompt([
+    {
+      type: "confirm",
+      name: "wantDarkMode",
+      message: "Enable Dark Mode?",
+      default: true,
+    },
+  ]);
+
+  let darkMode: TailwindConfig["darkMode"] = false;
+  let darkModeToggle = false;
+
+  if (wantDarkMode) {
+    darkMode = "class";
+    darkModeToggle = true;
+  }
+
+  const { colorPreset } = await inquirer.prompt([
+    {
+      type: "list",
+      name: "colorPreset",
+      message: "Choose a primary color:",
+      choices: colorChoices,
+    },
+  ]);
+
+  let customColor;
+  if (colorPreset === "custom") {
+    const res = await inquirer.prompt([
+      {
+        type: "input",
+        name: "customColor",
+        message: "Enter HEX color:",
+        default: "#6366f1",
+      },
+    ]);
+    customColor = res.customColor;
+  }
+
+  return {
+    darkMode,
+    darkModeToggle,
+    colorPreset,
+    customColor,
+    font: "none",
+  };
+}
+
+async function askAdvanced(): Promise<Partial<TailwindConfig>> {
   const { wantDarkMode } = await inquirer.prompt([
     {
       type: "confirm",
@@ -19,12 +77,11 @@ export async function askTailwindConfig(): Promise<TailwindConfig> {
       {
         type: "list",
         name: "strategy",
-        message: "Dark mode strategy:",
+        message: "Dark Mode strategy:",
         choices: [
-          { name: "Manual toggle (class) — Recommended", value: "class" },
+          { name: "Manual toggle (class)  (recommended)", value: "class" },
           { name: "System preference (media)", value: "media" },
         ],
-        default: "class",
       },
     ]);
 
@@ -35,11 +92,10 @@ export async function askTailwindConfig(): Promise<TailwindConfig> {
         {
           type: "confirm",
           name: "toggle",
-          message: "Add Theme Toggle component?",
+          message: "Add ThemeToggle component?",
           default: true,
         },
       ]);
-
       darkModeToggle = toggle;
     }
   }
@@ -48,19 +104,12 @@ export async function askTailwindConfig(): Promise<TailwindConfig> {
     {
       type: "list",
       name: "colorPreset",
-      message: "Choose color preset:",
-      choices: [
-        { name: "Indigo", value: "indigo" },
-        { name: "Emerald", value: "emerald" },
-        { name: "Neutral", value: "neutral" },
-        { name: "Custom", value: "custom" },
-        { name: "Skip", value: "none" },
-      ],
+      message: "Choose a primary color:",
+      choices: colorChoices,
     },
   ]);
 
   let customColor;
-
   if (colorPreset === "custom") {
     const res = await inquirer.prompt([
       {
@@ -70,7 +119,6 @@ export async function askTailwindConfig(): Promise<TailwindConfig> {
         default: "#6366f1",
       },
     ]);
-
     customColor = res.customColor;
   }
 
@@ -88,24 +136,36 @@ export async function askTailwindConfig(): Promise<TailwindConfig> {
     },
   ]);
 
-  // const { plugins } = await inquirer.prompt([
-  //   {
-  //     type: "checkbox",
-  //     name: "plugins",
-  //     message: "Select Tailwind plugins:",
-  //     choices: [
-  //       "@tailwindcss/forms",
-  //       "@tailwindcss/typography",
-  //     ],
-  //   },
-  // ]);
-
   return {
     darkMode,
     darkModeToggle,
     colorPreset,
     customColor,
     font,
-    // plugins,
+  };
+}
+
+export async function askTailwindConfig(): Promise<TailwindConfig> {
+  const { mode } = await inquirer.prompt([
+    {
+      type: "list",
+      name: "mode",
+      message: "Tailwind configuration mode?",
+      choices: [
+        { name: "Beginner  (recommended)", value: "beginner" },
+        { name: "Advanced  (full control)", value: "advanced" },
+      ],
+    },
+  ]);
+
+  const answers = mode === "beginner" ? await askBeginner() : await askAdvanced();
+
+  return {
+    mode,
+    darkMode: false,
+    darkModeToggle: false,
+    colorPreset: "none",
+    font: "none",
+    ...answers,
   };
 }

@@ -1,6 +1,9 @@
 export type FrameworkChoice = "react-ts" | "react-js";
 export type DirectoryMode = "new" | "current";
 export type StylingChoice = "tailwind" | "none";
+export type FontChoice = "inter" | "poppins" | "cairo" | "none";
+export type TailwindMode = "beginner" | "advanced";
+export type DarkModeStrategy = false | "media" | "class";
 
 export interface ProjectConfig {
   projectName?: string;
@@ -10,13 +13,10 @@ export interface ProjectConfig {
 }
 
 export interface TailwindConfig {
-  darkMode: false | "media" | "class";
+  mode: TailwindMode;
+  darkMode: DarkModeStrategy;
   darkModeToggle: boolean;
-
   colorPreset: "indigo" | "emerald" | "neutral" | "custom" | "none";
   customColor?: string;
-
-  font: "inter" | "poppins" | "cairo" | "none";
-
-  // plugins: string[];
+  font: FontChoice;
 }
