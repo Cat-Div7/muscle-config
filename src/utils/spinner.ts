@@ -1,6 +1,6 @@
-import ora from "ora";
+import ora, { type Ora } from "ora";
 
-let spinnerInstance: ora.Ora | null = null;
+let spinnerInstance: Ora | null = null;
 
 export const spinner = {
   start: (text: string) => {
