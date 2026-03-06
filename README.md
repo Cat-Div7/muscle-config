@@ -28,6 +28,49 @@ Instead of spending hours setting up a new project from scratch, `muscle-config`
 
 ---
 
+## CLI Flow
+```
+Welcome screen
+│
+├── Where to create the project?
+│     new folder / current directory
+│
+├── Project name?          ← only if "new folder"
+│
+├── Choose your React setup:
+│     React + TypeScript / React + JavaScript
+│
+├── Choose your styling solution:
+│     Tailwind CSS v4 / MUI / None
+│
+│
+├── [if Tailwind]
+│     ├── Configuration mode?
+│     │     Beginner / Advanced
+│     │
+│     ├── [Beginner]
+│     │     ├── Enable dark mode? (class strategy, auto toggle)
+│     │     └── Primary color preset
+│     │
+│     └── [Advanced]
+│           ├── Enable dark mode?
+│           │     └── Strategy: class / media
+│           │           └── [class] Add ThemeToggle component?
+│           ├── Primary color preset
+│           └── Font: Inter / Poppins / Cairo / Skip
+│
+├── [if MUI]
+│     ├── Default theme mode: Light / Dark / System
+│     ├── Add dark mode toggle component? Yes / No
+│     ├── Primary color preset: Blue / Purple / Green / Custom HEX
+│     └── Add MUI Icons package? Yes / No
+│
+└── [if None]
+      └── nothing extra
+```
+
+---
+
 ## Local Development & How To Use
 
 Clone the repo and install dependencies:
