@@ -10,6 +10,13 @@ const colorChoices = [
   { name: "  Skip", value: "none" },
 ];
 
+const fontChoices = [
+  { name: "Inter   — default for most apps", value: "inter" },
+  { name: "Poppins — great for dashboards & landing pages", value: "poppins" },
+  { name: "Cairo   — works great for bilingual apps", value: "cairo" },
+  { name: "Skip", value: "none" },
+]
+
 // Beginner mode asks only essential questions with simplified options
 async function askBeginner(): Promise<Partial<TailwindConfig>> {
   const { wantDarkMode } = await inquirer.prompt([
@@ -128,12 +135,7 @@ async function askAdvanced(): Promise<Partial<TailwindConfig>> {
       type: "list",
       name: "font",
       message: "Choose default font:",
-      choices: [
-        { name: "Inter", value: "inter" },
-        { name: "Poppins", value: "poppins" },
-        { name: "Cairo", value: "cairo" },
-        { name: "Skip", value: "none" },
-      ],
+      choices: fontChoices
     },
   ]);
 
