@@ -10,6 +10,7 @@ const colorChoices = [
   { name: "  Skip", value: "none" },
 ];
 
+// Beginner mode asks only essential questions with simplified options
 async function askBeginner(): Promise<Partial<TailwindConfig>> {
   const { wantDarkMode } = await inquirer.prompt([
     {
@@ -58,7 +59,7 @@ async function askBeginner(): Promise<Partial<TailwindConfig>> {
     font: "none",
   };
 }
-
+// Advanced mode provides more granular control over Tailwind configuration
 async function askAdvanced(): Promise<Partial<TailwindConfig>> {
   const { wantDarkMode } = await inquirer.prompt([
     {
