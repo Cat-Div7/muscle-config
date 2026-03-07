@@ -20,3 +20,11 @@ export interface TailwindConfig {
   customColor?: string;
   font: FontChoice;
 }
+
+export interface MuiConfig {
+  themeMode: "light" | "dark" | "system";
+  darkModeToggle: boolean;
+  colorPreset: "blue" | "purple" | "green" | "custom";
+  customColor?: string;
+  icons: boolean;
+}
