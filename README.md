@@ -38,41 +38,88 @@ If anything fails mid-installation, `muscle-config` automatically rolls back and
 ```
 Welcome screen
 │
-├── Where to create the project?
-│     new folder / current directory
+├── Q: Where would you like to create the project?
+│         ❯ Create in a new folder
+│           Use current directory
 │
-├── Project name?          ← only if "new folder"
+├── Q: Project name?                    ← only if "new folder"
+│         ❯ my-app
 │
-├── Choose your React setup:
-│     React + TypeScript / React + JavaScript
+├── Q: Choose your React setup:
+│         ❯ React + TypeScript
+│           React + JavaScript
 │
-├── Choose your styling solution:
-│     Tailwind CSS v4 / MUI / None
+└── Q: Choose your styling solution:
+          ❯ Tailwind CSS v4
+            MUI (Material UI)
+            None (plain CSS)
+
+
+── If Tailwind ────────────────────────────────────────────────
+
+├── Q: Tailwind configuration mode?
+│         ❯ Beginner  (recommended)
+│           Advanced  (full control)
 │
-│
-├── [if Tailwind]
-│     ├── Configuration mode?
-│     │     Beginner / Advanced
+├── [ Beginner ]
 │     │
-│     ├── [Beginner]
-│     │     ├── Enable dark mode? (class strategy, auto toggle)
-│     │     └── Primary color preset
+│     ├── Q: Enable Dark Mode?
+│     │         ❯ Yes  →  class strategy + ThemeToggle auto included
+│     │           No
 │     │
-│     └── [Advanced]
-│           ├── Enable dark mode?
-│           │     └── Strategy: class / media
-│           │           └── [class] Add ThemeToggle component?
-│           ├── Primary color preset
-│           └── Font: Inter / Poppins / Cairo / Skip
+│     └── Q: Choose a primary color:
+│                 ❯ Indigo / Emerald / Neutral / Custom HEX / Skip
 │
-├── [if MUI]
-│     ├── Default theme mode: Light / Dark / System
-│     ├── Add dark mode toggle component? Yes / No
-│     ├── Primary color preset: Blue / Purple / Green / Custom HEX
-│     └── Add MUI Icons package? Yes / No
+└── [ Advanced ]
+      │
+      ├── Q: Enable Dark Mode?
+      │         ❯ Yes
+      │           No
+      │
+      │     └── Q: Dark Mode strategy:
+      │                 ❯ Manual toggle (class)  (recommended)
+      │                   System preference (media)
+      │
+      │               └── Q: Add ThemeToggle component?  ← only if "class"
+      │                           ❯ Yes
+      │                             No
+      │
+      ├── Q: Choose a primary color:
+      │         ❯ Indigo / Emerald / Neutral / Custom HEX / Skip
+      │
+      └── Q: Choose default font:
+                ❯ Inter   — clean, modern, readable
+                  Poppins — rounded, great for dashboards
+                  Cairo   — elegant, great for bilingual apps
+                  Skip
+
+
+── If MUI ─────────────────────────────────────────────────────
+
+├── Q: Default theme mode:
+│         ❯ Light
+│           Dark
+│           System preference
 │
-└── [if None]
-      └── nothing extra
+├── Q: Add dark mode toggle component? (recommended — required for demo)
+│         ❯ Yes
+│           No
+│
+├── Q: Choose a primary color:
+│         ❯ Blue / Purple / Green / Custom HEX
+│
+├── Q: Add MUI Icons package? (@mui/icons-material)
+│         ❯ Yes
+│           No
+│
+└── Q: Override App.jsx with a MUI demo template?  ← only if toggle = Yes
+          ❯ Yes
+            No
+
+
+── If None ────────────────────────────────────────────────────
+
+└── → No extra steps, plain Vite CSS stays as-is
 ```
 
 ---
