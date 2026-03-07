@@ -28,6 +28,12 @@ Instead of spending hours setting up a new project from scratch, `muscle-config`
 
 ---
 
+## Safe by Design
+
+If anything fails mid-installation, `muscle-config` automatically rolls back and cleans up. No half-scaffolded projects left behind.
+
+---
+
 ## CLI Flow
 ```
 Welcome screen
@@ -145,12 +151,6 @@ my-app/
 ├── tailwind.config.ts
 └── package.json
 ```
-
----
-
-## Safe by Design
-
-If anything fails mid-installation, `muscle-config` automatically rolls back and cleans up. No half-scaffolded projects left behind.
 
 ---
 
