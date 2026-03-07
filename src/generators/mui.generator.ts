@@ -82,7 +82,9 @@ const ThemeContext = createContext({});`;
   const savedType = isTypeScript ? " as ThemeMode | null" : "";
   const stateType = isTypeScript ? "<ThemeMode>" : "";
   const returnType = isTypeScript ? ": ThemeContextType" : "";
-  const childrenType = isTypeScript ? "{ children: React.ReactNode }" : "{ children }";
+  const childrenType = isTypeScript 
+    ? "({ children }: { children: React.ReactNode })" 
+    : "({ children })";
 
   return `
 import { createContext, useContext, useEffect, useState } from "react";
@@ -90,7 +92,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 const THEME_KEY = "theme";
 ${tsBlock}
 
-export function ThemeContextProvider(${childrenType}) {
+export function ThemeContextProvider${childrenType} {
   const [theme, setTheme] = useState${stateType}(() => {
     const saved = localStorage.getItem(THEME_KEY)${savedType};
     return ${initialMode};
@@ -118,14 +120,14 @@ export function useTheme()${returnType} {
 
 // ─── AppMuiThemeProvider.tsx / .jsx ───
 export function generateAppMuiThemeProvider(isTypeScript: boolean): string {
-  const childrenType = isTypeScript ? "{ children: React.ReactNode }" : "{ children }";
+  const propsType = isTypeScript ? "({ children }: { children: React.ReactNode })" : "({ children })";
 
   return `
 import { createTheme, ThemeProvider as MuiThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { useTheme } from "../context/ThemeContextProvider";
 
-export default function AppMuiThemeProvider(${childrenType}) {
+export default function AppMuiThemeProvider${propsType} {
   const { theme } = useTheme();
   const muiTheme = createTheme({
     palette: {
