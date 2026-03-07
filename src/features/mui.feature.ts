@@ -99,7 +99,7 @@ export const muiFeature: Feature = {
       if (config.darkModeToggle) {
         spinner.start("Creating ThemeToggle component...");
         const toggleFile = path.join(componentDir, isTypeScript ? "ThemeToggle.tsx" : "ThemeToggle.jsx");
-        await fs.writeFile(toggleFile, generateMuiThemeToggle(isTypeScript));
+        await fs.writeFile(toggleFile, generateMuiThemeToggle());
         spinner.succeed("ThemeToggle component created!");
       }
 

@@ -75,14 +75,6 @@ export async function askMuiConfig(): Promise<MuiConfig> {
     },
   ]);
 
-  console.log({
-    themeMode,
-    darkModeToggle,
-    colorPreset,
-    customColor,
-    icons,
-  });
-
   return {
     themeMode,
     darkModeToggle,

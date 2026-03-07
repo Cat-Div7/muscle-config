@@ -43,9 +43,7 @@ export function createAppTheme(${modeType}) {
 }
 
 // ─── ThemeToggle.tsx / .jsx ───
-export function generateMuiThemeToggle(isTypeScript: boolean): string {
-  const returnType = isTypeScript ? ": ThemeContextType" : "";
-
+export function generateMuiThemeToggle(): string {
   return `
 import IconButton from "@mui/material/IconButton";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
