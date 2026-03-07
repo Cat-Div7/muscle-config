@@ -48,7 +48,7 @@ export function generateMuiThemeToggle(): string {
 import IconButton from "@mui/material/IconButton";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
-import { useTheme } from "../context/ThemeContextProvider.js";
+import { useTheme } from "../context/ThemeContextProvider";
 
 export default function ThemeToggle() {
   const { theme, toggleTheme } = useTheme();
@@ -123,7 +123,7 @@ export function generateAppMuiThemeProvider(isTypeScript: boolean): string {
   return `
 import { createTheme, ThemeProvider as MuiThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
-import { useTheme } from "../context/ThemeContextProvider.js";
+import { useTheme } from "../context/ThemeContextProvider";
 
 export default function AppMuiThemeProvider(${childrenType}) {
   const { theme } = useTheme();
@@ -145,12 +145,14 @@ export default function AppMuiThemeProvider(${childrenType}) {
 
 // ─── main.tsx / main.jsx ───
 export function generateMuiMain(isTypeScript: boolean): string {
+  const ext = isTypeScript ? ".tsx" : ".jsx";
+
   return `
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { ThemeContextProvider } from "./context/ThemeContextProvider.js";
-import AppMuiThemeProvider from "./themes/AppMuiThemeProvider.js";
-import App from "./App.js";
+import { ThemeContextProvider } from "./context/ThemeContextProvider";
+import AppMuiThemeProvider from "./themes/AppMuiThemeProvider";
+import App from "./App";
 
 createRoot(document.getElementById("root")${isTypeScript ? "!" : ""}).render(
   <StrictMode>
