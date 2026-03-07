@@ -87,7 +87,7 @@ const ThemeContext = createContext({});`;
   return `
 import { createContext, useContext, useEffect, useState } from "react";
 
-const THEME_KEY = "app-theme-mode";
+const THEME_KEY = "theme";
 ${tsBlock}
 
 export function ThemeContextProvider(${childrenType}) {
@@ -121,19 +121,23 @@ export function generateAppMuiThemeProvider(isTypeScript: boolean): string {
   const childrenType = isTypeScript ? "{ children: React.ReactNode }" : "{ children }";
 
   return `
-import { ThemeProvider, CssBaseline } from "@mui/material";
-import { createAppTheme } from "../themes/theme.js";
+import { createTheme, ThemeProvider as MuiThemeProvider } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
 import { useTheme } from "../context/ThemeContextProvider.js";
 
 export default function AppMuiThemeProvider(${childrenType}) {
   const { theme } = useTheme();
-  const muiTheme = createAppTheme(theme);
+  const muiTheme = createTheme({
+    palette: {
+      mode: theme,
+    },
+  });
 
   return (
-    <ThemeProvider theme={muiTheme}>
+    <MuiThemeProvider theme={muiTheme}>
       <CssBaseline />
       {children}
-    </ThemeProvider>
+    </MuiThemeProvider>
   );
 }
 `.trim();
@@ -145,7 +149,7 @@ export function generateMuiMain(isTypeScript: boolean): string {
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { ThemeContextProvider } from "./context/ThemeContextProvider.js";
-import AppMuiThemeProvider from "./components/AppMuiThemeProvider.js";
+import AppMuiThemeProvider from "./themes/AppMuiThemeProvider.js";
 import App from "./App.js";
 
 createRoot(document.getElementById("root")${isTypeScript ? "!" : ""}).render(
@@ -159,4 +163,3 @@ createRoot(document.getElementById("root")${isTypeScript ? "!" : ""}).render(
 );
 `.trim();
 }
-

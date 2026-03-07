@@ -83,12 +83,10 @@ export const muiFeature: Feature = {
 
       /**
        * STEP 7
-       * Generate src/components/AppMuiThemeProvider.tsx or .jsx
+       * Generate src/themes/AppMuiThemeProvider.tsx or .jsx
        */
       spinner.start("Generating AppMuiThemeProvider...");
-      const componentDir = path.join(projectPath, "src/components");
-      await fs.mkdir(componentDir, { recursive: true });
-      const providerFile = path.join(componentDir, isTypeScript ? "AppMuiThemeProvider.tsx" : "AppMuiThemeProvider.jsx");
+      const providerFile = path.join(themesDir, isTypeScript ? "AppMuiThemeProvider.tsx" : "AppMuiThemeProvider.jsx");
       await fs.writeFile(providerFile, generateAppMuiThemeProvider(isTypeScript));
       spinner.succeed("AppMuiThemeProvider generated!");
 
@@ -98,6 +96,7 @@ export const muiFeature: Feature = {
        */
       if (config.darkModeToggle) {
         spinner.start("Creating ThemeToggle component...");
+        const componentDir = path.join(projectPath, "src/components");
         const toggleFile = path.join(componentDir, isTypeScript ? "ThemeToggle.tsx" : "ThemeToggle.jsx");
         await fs.writeFile(toggleFile, generateMuiThemeToggle());
         spinner.succeed("ThemeToggle component created!");
