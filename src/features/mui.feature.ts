@@ -8,6 +8,8 @@ import { askMuiConfig } from "../prompts/mui.prompt.js";
 import {
   generateMuiTheme,
   generateMuiThemeToggle,
+  generateThemeContextProvider,
+  generateAppMuiThemeProvider,
   generateMuiMain,
 } from "../generators/mui.generator.js";
 
@@ -47,7 +49,7 @@ export const muiFeature: Feature = {
 
       /**
        * STEP 4
-       * Install MUI icons if selected
+       * Install MUI icons if selected or needed for ThemeToggle
        */
       if (config.icons || config.darkModeToggle) {
         spinner.start("Installing MUI Icons...");
@@ -59,45 +61,54 @@ export const muiFeature: Feature = {
 
       /**
        * STEP 5
-       * Generate themes/theme.ts
+       * Generate src/themes/theme.ts or theme.js
        */
       spinner.start("Generating MUI theme...");
       const themesDir = path.join(projectPath, "src/themes");
       await fs.mkdir(themesDir, { recursive: true });
-
-      const themeFile = path.join(
-        themesDir,
-        isTypeScript ? "theme.ts" : "theme.js",
-      );
+      const themeFile = path.join(themesDir, isTypeScript ? "theme.ts" : "theme.js");
       await fs.writeFile(themeFile, generateMuiTheme(config, isTypeScript));
       spinner.succeed("MUI theme generated!");
 
       /**
        * STEP 6
+       * Generate src/context/ThemeContextProvider.tsx or .jsx
+       */
+      spinner.start("Generating ThemeContextProvider...");
+      const contextDir = path.join(projectPath, "src/context");
+      await fs.mkdir(contextDir, { recursive: true });
+      const contextFile = path.join(contextDir, isTypeScript ? "ThemeContextProvider.tsx" : "ThemeContextProvider.jsx");
+      await fs.writeFile(contextFile, generateThemeContextProvider(config, isTypeScript));
+      spinner.succeed("ThemeContextProvider generated!");
+
+      /**
+       * STEP 7
+       * Generate src/components/AppMuiThemeProvider.tsx or .jsx
+       */
+      spinner.start("Generating AppMuiThemeProvider...");
+      const componentDir = path.join(projectPath, "src/components");
+      await fs.mkdir(componentDir, { recursive: true });
+      const providerFile = path.join(componentDir, isTypeScript ? "AppMuiThemeProvider.tsx" : "AppMuiThemeProvider.jsx");
+      await fs.writeFile(providerFile, generateAppMuiThemeProvider(isTypeScript));
+      spinner.succeed("AppMuiThemeProvider generated!");
+
+      /**
+       * STEP 8
        * Generate ThemeToggle component if selected
        */
       if (config.darkModeToggle) {
         spinner.start("Creating ThemeToggle component...");
-        const componentDir = path.join(projectPath, "src/components");
-        await fs.mkdir(componentDir, { recursive: true });
-
-        const toggleFile = path.join(
-          componentDir,
-          isTypeScript ? "ThemeToggle.tsx" : "ThemeToggle.jsx",
-        );
+        const toggleFile = path.join(componentDir, isTypeScript ? "ThemeToggle.tsx" : "ThemeToggle.jsx");
         await fs.writeFile(toggleFile, generateMuiThemeToggle(isTypeScript));
         spinner.succeed("ThemeToggle component created!");
       }
 
       /**
-       * STEP 7
-       * Overwrite main.tsx with ThemeProvider setup
+       * STEP 9
+       * Overwrite main.tsx / main.jsx with clean provider composition
        */
       spinner.start("Configuring main entry point...");
-      const mainFile = path.join(
-        projectPath,
-        isTypeScript ? "src/main.tsx" : "src/main.jsx",
-      );
+      const mainFile = path.join(projectPath, isTypeScript ? "src/main.tsx" : "src/main.jsx");
       await fs.writeFile(mainFile, generateMuiMain(isTypeScript));
       spinner.succeed("Main entry point configured!");
 

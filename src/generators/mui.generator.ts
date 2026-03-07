@@ -44,20 +44,20 @@ export function createAppTheme(${modeType}) {
 
 // ─── ThemeToggle.tsx / .jsx ───
 export function generateMuiThemeToggle(isTypeScript: boolean): string {
-  const interfaceBlock = isTypeScript
-    ? `\ninterface ThemeToggleProps {\n  mode: "light" | "dark";\n  onToggle: () => void;\n}\n`
-    : "";
-  const propsType = isTypeScript ? ": ThemeToggleProps" : "";
+  const returnType = isTypeScript ? ": ThemeContextType" : "";
 
   return `
 import IconButton from "@mui/material/IconButton";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
-${interfaceBlock}
-export default function ThemeToggle({ mode, onToggle }${propsType}) {
+import { useTheme } from "../context/ThemeContextProvider.js";
+
+export default function ThemeToggle() {
+  const { theme, toggleTheme } = useTheme();
+
   return (
-    <IconButton onClick={onToggle} color="inherit">
-      {mode === "dark" ? <Brightness7Icon /> : <Brightness4Icon />}
+    <IconButton onClick={toggleTheme} color="inherit">
+      {theme === "dark" ? <Brightness7Icon /> : <Brightness4Icon />}
     </IconButton>
   );
 }
