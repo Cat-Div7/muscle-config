@@ -12,6 +12,9 @@ import {
   generateAppMuiThemeProvider,
   generateMuiMain,
 } from "../generators/mui.generator.js";
+import { fileURLToPath } from "url";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export const muiFeature: Feature = {
   name: "mui",
@@ -111,6 +114,25 @@ export const muiFeature: Feature = {
       const mainFile = path.join(projectPath, isTypeScript ? "src/main.tsx" : "src/main.jsx");
       await fs.writeFile(mainFile, generateMuiMain(isTypeScript));
       spinner.succeed("Main entry point configured!");
+
+      /**
+       * STEP 10
+       * Copy demo App template if user selected it
+       */
+      if (config.demo) {
+        spinner.start("Copying MUI demo template...");
+        const templateDir = path.join(__dirname, "../templates/react/mui");
+        const appTemplatePath = path.join(
+          templateDir,
+          isTypeScript ? "App.tsx" : "App.jsx",
+        );
+        const appTargetPath = path.join(
+          projectPath,
+          isTypeScript ? "src/App.tsx" : "src/App.jsx",
+        );
+        await fs.copyFile(appTemplatePath, appTargetPath);
+        spinner.succeed("Demo template copied!");
+      }
 
       /**
        * FINAL SUCCESS MESSAGE

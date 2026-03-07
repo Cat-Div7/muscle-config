@@ -39,7 +39,8 @@ export async function askMuiConfig(): Promise<MuiConfig> {
     {
       type: "confirm",
       name: "darkModeToggle",
-      message: "Add dark mode toggle component?",
+      message:
+        "Add dark mode toggle component? (recommended — required for demo)",
       default: true,
     },
   ]);
@@ -75,11 +76,25 @@ export async function askMuiConfig(): Promise<MuiConfig> {
     },
   ]);
 
+  let demo = false;
+  if (darkModeToggle) {
+    const { wantDemo } = await inquirer.prompt([
+      {
+        type: "confirm",
+        name: "wantDemo",
+        message: "Override App.jsx with a MUI demo template?",
+        default: true,
+      },
+    ]);
+    demo = wantDemo;
+  }
+
   return {
     themeMode,
     darkModeToggle,
     colorPreset,
     customColor,
     icons,
+    demo,
   };
 }

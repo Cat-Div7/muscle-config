@@ -27,4 +27,5 @@ export interface MuiConfig {
   colorPreset: "blue" | "purple" | "green" | "custom";
   customColor?: string;
   icons: boolean;
+  demo: boolean;
 }
