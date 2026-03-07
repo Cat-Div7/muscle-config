@@ -98,7 +98,7 @@ export const muiFeature: Feature = {
         projectPath,
         isTypeScript ? "src/main.tsx" : "src/main.jsx",
       );
-      await fs.writeFile(mainFile, generateMuiMain(config, isTypeScript));
+      await fs.writeFile(mainFile, generateMuiMain(isTypeScript));
       spinner.succeed("Main entry point configured!");
 
       /**

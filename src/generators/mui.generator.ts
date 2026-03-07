@@ -1,10 +1,10 @@
 import type { MuiConfig } from "../config/projectConfig.js";
 
+// ─── Helpers ───
 const colorMap: Record<string, string> = {
   blue: "#1976d2",
   purple: "#9c27b0",
   green: "#2e7d32",
-  custom: "",
 };
 
 function getPrimaryColor(config: MuiConfig): string {
@@ -13,16 +13,17 @@ function getPrimaryColor(config: MuiConfig): string {
     : colorMap[config.colorPreset];
 }
 
-// ─── theme.ts ───
-export function generateMuiTheme(
-  config: MuiConfig,
-  isTypeScript: boolean,
-): string {
-  const primaryColor = getPrimaryColor(config);
+function getInitialMode(config: MuiConfig): string {
+  const systemMode = `window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"`;
+  return config.themeMode === "system"
+    ? `saved || (${systemMode})`
+    : `saved || "${config.themeMode}"`;
+}
 
-  const tsImport = isTypeScript
-    ? `\nimport type { PaletteMode } from "@mui/material";`
-    : "";
+// ─── theme.ts ───
+export function generateMuiTheme(config: MuiConfig, isTypeScript: boolean): string {
+  const primaryColor = getPrimaryColor(config);
+  const tsImport = isTypeScript ? `\nimport type { PaletteMode } from "@mui/material";` : "";
   const modeType = isTypeScript ? "mode: PaletteMode" : "mode";
 
   return `
@@ -41,7 +42,7 @@ export function createAppTheme(${modeType}) {
 `.trim();
 }
 
-// ─── ThemeToggle.tsx / ThemeToggle.jsx ───
+// ─── ThemeToggle.tsx / .jsx ───
 export function generateMuiThemeToggle(isTypeScript: boolean): string {
   const interfaceBlock = isTypeScript
     ? `\ninterface ThemeToggleProps {\n  mode: "light" | "dark";\n  onToggle: () => void;\n}\n`
@@ -63,51 +64,101 @@ export default function ThemeToggle({ mode, onToggle }${propsType}) {
 `.trim();
 }
 
-// ─── main.tsx / main.jsx ───
-export function generateMuiMain(
-  config: MuiConfig,
-  isTypeScript: boolean,
-): string {
-  const systemMode =
-    config.themeMode === "system"
-      ? `window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"`
-      : `"${config.themeMode}"`;
+// ─── ThemeContextProvider.tsx / .jsx ───
+export function generateThemeContextProvider(config: MuiConfig, isTypeScript: boolean): string {
+  const initialMode = getInitialMode(config);
 
-  const tsTypes = isTypeScript ? `: ${'"light" | "dark"'}` : "";
+  const tsBlock = isTypeScript
+    ? `
+type ThemeMode = "light" | "dark";
 
-  const toggleImport = config.darkModeToggle
-    ? `import ThemeToggle from "./components/ThemeToggle.js";`
-    : "";
+interface ThemeContextType {
+  theme: ThemeMode;
+  toggleTheme: () => void;
+}
 
-  const toggleUsage = config.darkModeToggle
-    ? `<ThemeToggle mode={mode} onToggle={() => setMode(mode === "light" ? "dark" : "light")} />`
-    : "";
+const ThemeContext = createContext<ThemeContextType>({} as ThemeContextType);`
+    : `
+const ThemeContext = createContext({});`;
+
+  const savedType = isTypeScript ? " as ThemeMode | null" : "";
+  const stateType = isTypeScript ? "<ThemeMode>" : "";
+  const returnType = isTypeScript ? ": ThemeContextType" : "";
+  const childrenType = isTypeScript ? "{ children: React.ReactNode }" : "{ children }";
 
   return `
-import { StrictMode, useState } from "react";
-import { createRoot } from "react-dom/client";
-import { ThemeProvider, CssBaseline } from "@mui/material";
-import { createAppTheme } from "./themes/theme.js";
-import App from "./App.js";
-${toggleImport}
+import { createContext, useContext, useEffect, useState } from "react";
 
-function Root() {
-  const [mode, setMode] = useState${isTypeScript ? `<"light" | "dark">` : ""}(${systemMode});
-  const theme = createAppTheme(mode);
+const THEME_KEY = "app-theme-mode";
+${tsBlock}
+
+export function ThemeContextProvider(${childrenType}) {
+  const [theme, setTheme] = useState${stateType}(() => {
+    const saved = localStorage.getItem(THEME_KEY)${savedType};
+    return ${initialMode};
+  });
+
+  useEffect(() => {
+    localStorage.setItem(THEME_KEY, theme);
+  }, [theme]);
+
+  const toggleTheme = () =>
+    setTheme((prev) => (prev === "light" ? "dark" : "light"));
 
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      ${toggleUsage}
-      <App />
-    </ThemeProvider>
+    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+      {children}
+    </ThemeContext.Provider>
   );
 }
 
+export function useTheme()${returnType} {
+  return useContext(ThemeContext);
+}
+`.trim();
+}
+
+// ─── AppMuiThemeProvider.tsx / .jsx ───
+export function generateAppMuiThemeProvider(isTypeScript: boolean): string {
+  const childrenType = isTypeScript ? "{ children: React.ReactNode }" : "{ children }";
+
+  return `
+import { ThemeProvider, CssBaseline } from "@mui/material";
+import { createAppTheme } from "../themes/theme.js";
+import { useTheme } from "../context/ThemeContextProvider.js";
+
+export default function AppMuiThemeProvider(${childrenType}) {
+  const { theme } = useTheme();
+  const muiTheme = createAppTheme(theme);
+
+  return (
+    <ThemeProvider theme={muiTheme}>
+      <CssBaseline />
+      {children}
+    </ThemeProvider>
+  );
+}
+`.trim();
+}
+
+// ─── main.tsx / main.jsx ───
+export function generateMuiMain(isTypeScript: boolean): string {
+  return `
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import { ThemeContextProvider } from "./context/ThemeContextProvider.js";
+import AppMuiThemeProvider from "./components/AppMuiThemeProvider.js";
+import App from "./App.js";
+
 createRoot(document.getElementById("root")${isTypeScript ? "!" : ""}).render(
   <StrictMode>
-    <Root />
+    <ThemeContextProvider>
+      <AppMuiThemeProvider>
+        <App />
+      </AppMuiThemeProvider>
+    </ThemeContextProvider>
   </StrictMode>
 );
 `.trim();
 }
+
