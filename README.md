@@ -216,10 +216,10 @@ my-app/
 - [ ] Rollback on failure
 - [ ] Custom template support
 - [ ] Vue / Svelte support (future)
-```
+
+---
 
 ## Project Structure (This Repo)
-
 ```
 muscle-config/
 ├── src/
