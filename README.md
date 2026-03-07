@@ -204,16 +204,19 @@ my-app/
 ## Roadmap
 
 - [x] React + TypeScript/JavaScript
-- [ ] Tailwind, MUI, Normal CSS
+- [x] Tailwind CSS v4
+- [x] MUI (Material UI)
+- [ ] Normal CSS utilities
 - [ ] Feature-based and Layered architecture
 - [ ] Next.js support
 - [ ] Zustand + React Query setup
 - [ ] ESLint + Prettier pre-configured
 - [ ] Git init + initial commit
+- [ ] Path aliases (@context, @themes, @root)
+- [ ] Rollback on failure
 - [ ] Custom template support
 - [ ] Vue / Svelte support (future)
-
----
+```
 
 ## Project Structure (This Repo)
 
