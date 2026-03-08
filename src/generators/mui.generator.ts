@@ -154,8 +154,6 @@ export default function AppMuiThemeProvider${propsType} {
 
 // ─── main.tsx / main.jsx ───
 export function generateMuiMain(isTypeScript: boolean): string {
-  const ext = isTypeScript ? ".tsx" : ".jsx";
-
   return `
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";

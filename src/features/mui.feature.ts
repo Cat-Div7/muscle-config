@@ -13,7 +13,7 @@ import {
   generateMuiMain,
 } from "../generators/mui.generator.js";
 import { fileURLToPath } from "url";
-import { rollbackFeature } from "../utils/rollback.js";
+import { restoreSnapshots, rollbackFeature, saveSnapshot } from "../utils/rollback.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -134,6 +134,7 @@ export const muiFeature: Feature = {
         projectPath,
         isTypeScript ? "src/main.tsx" : "src/main.jsx",
       );
+      await saveSnapshot(mainFile);
       await fs.writeFile(mainFile, generateMuiMain(isTypeScript));
       spinner.succeed("Main entry point configured!");
 
@@ -162,13 +163,12 @@ export const muiFeature: Feature = {
       logger.success("MUI added successfully!");
     } catch (error) {
       spinner.fail("Failed to setup MUI.");
+      await restoreSnapshots();
       await rollbackFeature([
         path.join(projectPath, "src/themes"),
         path.join(projectPath, "src/context"),
         path.join(projectPath, "src/components/ThemeToggle.tsx"),
         path.join(projectPath, "src/components/ThemeToggle.jsx"),
-        path.join(projectPath, "src/main.tsx"),
-        path.join(projectPath, "src/main.jsx"),
       ]);
       throw error;
     }

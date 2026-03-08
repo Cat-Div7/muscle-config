@@ -1,5 +1,4 @@
 import fs from "fs/promises";
-import path from "path";
 import { logger } from "./logger.js";
 import { cleanupDirectory } from "./directory.js";
 
@@ -37,4 +36,32 @@ export async function rollbackFeature(
   } catch {
     logger.error("Feature rollback failed — some files may need manual cleanup.");
   }
+}
+
+// Snapshot store — saves original file content before overwriting
+const snapshots = new Map<string, string>();
+
+export async function saveSnapshot(filePath: string): Promise<void> {
+  try {
+    const content = await fs.readFile(filePath, "utf-8");
+    snapshots.set(filePath, content);
+  } catch {
+    // File didn't exist before — snapshot as null so we delete it on rollback
+    snapshots.set(filePath, "");
+  }
+}
+
+export async function restoreSnapshots(): Promise<void> {
+  for (const [filePath, content] of snapshots.entries()) {
+    try {
+      if (content === "") {
+        await fs.rm(filePath, { force: true });
+      } else {
+        await fs.writeFile(filePath, content);
+      }
+    } catch {
+      logger.error(`Failed to restore ${filePath}`);
+    }
+  }
+  snapshots.clear();
 }

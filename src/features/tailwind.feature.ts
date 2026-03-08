@@ -9,7 +9,7 @@ import { askTailwindConfig } from "../prompts/tailwind.prompt.js";
 import { generateIndexCss } from "../generators/css.generator.js";
 import { generateThemeToggle } from "../generators/toggle.generator.js";
 import { generateTailwindConfig } from "../generators/tailwind.config.generator.js";
-import { rollbackFeature } from "../utils/rollback.js";
+import { restoreSnapshots, rollbackFeature, saveSnapshot } from "../utils/rollback.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -102,6 +102,7 @@ export const tailwindFeature: Feature = {
        */
       spinner.start("Generating Tailwind styles...");
       const cssPath = path.join(projectPath, "src/index.css");
+      await saveSnapshot(cssPath);
       const cssContent = generateIndexCss(config);
       await fs.writeFile(cssPath, cssContent);
       spinner.succeed("Tailwind styles generated!");
@@ -146,8 +147,8 @@ export const tailwindFeature: Feature = {
       logger.success("Tailwind v4 added successfully!");
     } catch (error) {
       spinner.fail("Failed to setup Tailwind.");
+      await restoreSnapshots();
       await rollbackFeature([
-        path.join(projectPath, "src/index.css"),
         path.join(projectPath, "tailwind.config.ts"),
         path.join(projectPath, "tailwind.config.js"),
         path.join(projectPath, "src/components/ThemeToggle.tsx"),
