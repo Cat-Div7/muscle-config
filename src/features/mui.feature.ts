@@ -13,6 +13,7 @@ import {
   generateMuiMain,
 } from "../generators/mui.generator.js";
 import { fileURLToPath } from "url";
+import { rollbackFeature } from "../utils/rollback.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -69,7 +70,10 @@ export const muiFeature: Feature = {
       spinner.start("Generating MUI theme...");
       const themesDir = path.join(projectPath, "src/themes");
       await fs.mkdir(themesDir, { recursive: true });
-      const themeFile = path.join(themesDir, isTypeScript ? "theme.ts" : "theme.js");
+      const themeFile = path.join(
+        themesDir,
+        isTypeScript ? "theme.ts" : "theme.js",
+      );
       await fs.writeFile(themeFile, generateMuiTheme(config, isTypeScript));
       spinner.succeed("MUI theme generated!");
 
@@ -80,8 +84,14 @@ export const muiFeature: Feature = {
       spinner.start("Generating ThemeContextProvider...");
       const contextDir = path.join(projectPath, "src/context");
       await fs.mkdir(contextDir, { recursive: true });
-      const contextFile = path.join(contextDir, isTypeScript ? "ThemeContextProvider.tsx" : "ThemeContextProvider.jsx");
-      await fs.writeFile(contextFile, generateThemeContextProvider(config, isTypeScript));
+      const contextFile = path.join(
+        contextDir,
+        isTypeScript ? "ThemeContextProvider.tsx" : "ThemeContextProvider.jsx",
+      );
+      await fs.writeFile(
+        contextFile,
+        generateThemeContextProvider(config, isTypeScript),
+      );
       spinner.succeed("ThemeContextProvider generated!");
 
       /**
@@ -89,8 +99,14 @@ export const muiFeature: Feature = {
        * Generate src/themes/AppMuiThemeProvider.tsx or .jsx
        */
       spinner.start("Generating AppMuiThemeProvider...");
-      const providerFile = path.join(themesDir, isTypeScript ? "AppMuiThemeProvider.tsx" : "AppMuiThemeProvider.jsx");
-      await fs.writeFile(providerFile, generateAppMuiThemeProvider(isTypeScript));
+      const providerFile = path.join(
+        themesDir,
+        isTypeScript ? "AppMuiThemeProvider.tsx" : "AppMuiThemeProvider.jsx",
+      );
+      await fs.writeFile(
+        providerFile,
+        generateAppMuiThemeProvider(isTypeScript),
+      );
       spinner.succeed("AppMuiThemeProvider generated!");
 
       /**
@@ -101,7 +117,10 @@ export const muiFeature: Feature = {
         spinner.start("Creating ThemeToggle component...");
         const componentDir = path.join(projectPath, "src/components");
         await fs.mkdir(componentDir, { recursive: true });
-        const toggleFile = path.join(componentDir, isTypeScript ? "ThemeToggle.tsx" : "ThemeToggle.jsx");
+        const toggleFile = path.join(
+          componentDir,
+          isTypeScript ? "ThemeToggle.tsx" : "ThemeToggle.jsx",
+        );
         await fs.writeFile(toggleFile, generateMuiThemeToggle());
         spinner.succeed("ThemeToggle component created!");
       }
@@ -111,7 +130,10 @@ export const muiFeature: Feature = {
        * Overwrite main.tsx / main.jsx with clean provider composition
        */
       spinner.start("Configuring main entry point...");
-      const mainFile = path.join(projectPath, isTypeScript ? "src/main.tsx" : "src/main.jsx");
+      const mainFile = path.join(
+        projectPath,
+        isTypeScript ? "src/main.tsx" : "src/main.jsx",
+      );
       await fs.writeFile(mainFile, generateMuiMain(isTypeScript));
       spinner.succeed("Main entry point configured!");
 
@@ -140,6 +162,14 @@ export const muiFeature: Feature = {
       logger.success("MUI added successfully!");
     } catch (error) {
       spinner.fail("Failed to setup MUI.");
+      await rollbackFeature([
+        path.join(projectPath, "src/themes"),
+        path.join(projectPath, "src/context"),
+        path.join(projectPath, "src/components/ThemeToggle.tsx"),
+        path.join(projectPath, "src/components/ThemeToggle.jsx"),
+        path.join(projectPath, "src/main.tsx"),
+        path.join(projectPath, "src/main.jsx"),
+      ]);
       throw error;
     }
   },
