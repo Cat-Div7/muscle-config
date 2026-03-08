@@ -7,9 +7,14 @@ import { askStyling } from "../prompts/styling.prompt.js";
 import { tailwindFeature } from "../features/tailwind.feature.js";
 import type { ProjectConfig } from "../config/projectConfig.js";
 import { muiFeature } from "../features/mui.feature.js";
+import { checkCurrentDirectory } from "../utils/directory.js";
 
 export async function createProject() {
   const directoryMode = await askDirectoryMode();
+
+  if (directoryMode === "current") {
+    await checkCurrentDirectory();
+  }
 
   let projectName = "";
   if (directoryMode === "new") {

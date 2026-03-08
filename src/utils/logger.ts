@@ -8,7 +8,7 @@ export const logger = {
     console.log(`${chalk.green("✓")} ${chalk.green(msg)}`),
 
   warn: (msg: string) =>
-    console.log(`${chalk.yellow("⚡")} ${chalk.yellow(msg)}`),
+    console.log(`${chalk.bold.yellow("⚠")} ${chalk.yellow(msg)}`),
 
   error: (msg: string) =>
     console.log(`${chalk.red("✕")} ${chalk.red(msg)}`),

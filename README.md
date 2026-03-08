@@ -259,6 +259,7 @@ muscle-config/
 │   │   ├── welcome.ts                    # CLI welcome screen
 │   │   ├── logger.ts                     # Colored console output
 │   │   ├── spinner.ts                    # Loading spinner helper
+|   |   ├── directory.ts                  # Directory helpers (check, cleanup, etc.)
 │   │   ├── files.ts                      # File/folder helpers
 │   │   └── install.ts                    # Dependency installer
 │   └── index.ts                          # Entry point
