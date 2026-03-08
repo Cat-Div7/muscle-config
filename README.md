@@ -224,26 +224,44 @@ my-app/
 muscle-config/
 ├── src/
 │   ├── commands/
-│   │   └── create.command.ts     # Main create command orchestration
+│   │   └── create.command.ts             # Main create command orchestration
 │   ├── config/
-│   │   └── projectConfig.ts      # Project configuration types & defaults
+│   │   └── projectConfig.ts              # Project configuration types & defaults
+│   ├── features/
+│   │   ├── feature.interface.ts          # Feature contract interface
+│   │   ├── tailwind.feature.ts           # Tailwind v4 setup orchestration
+│   │   └── mui.feature.ts                # MUI setup orchestration
 │   ├── generators/
-│   │   └── react.generator.ts    # React scaffolding logic per option
+│   │   ├── react.generator.ts            # React + Vite scaffolding
+│   │   ├── css.generator.ts              # Tailwind index.css generator
+│   │   ├── tailwind.config.generator.ts  # tailwind.config.ts/js generator
+│   │   ├── toggle.generator.ts           # Tailwind ThemeToggle generator
+│   │   └── mui.generator.ts              # MUI files generator (theme, context, providers)
 │   ├── prompts/
-│   │   ├── framework.prompt.ts   # Framework selection prompt
-│   │   ├── directory.prompt.ts   # Output directory prompt
-│   │   └── projectName.prompt.ts # Project name prompt
-│   ├── templates/                # Static template files
+│   │   ├── directory.prompt.ts           # Output directory prompt
+│   │   ├── projectName.prompt.ts         # Project name prompt
+│   │   ├── framework.prompt.ts           # Framework selection prompt
+│   │   ├── styling.prompt.ts             # Styling solution prompt
+│   │   ├── tailwind.prompt.ts            # Tailwind configuration prompts
+│   │   └── mui.prompt.ts                 # MUI configuration prompts
+│   ├── templates/                        # Static template files
 │   │   ├── react/
-│   │   ├── nextjs/
-│   │   └── shared/
+│   │   │   ├── tailwind-v4/
+│   │   │   │   ├── vite.config.ts        # Vite config with Tailwind plugin (TS)
+│   │   │   │   ├── vite.config.js        # Vite config with Tailwind plugin (JS)
+│   │   │   │   └── index.css             # Base Tailwind CSS template
+│   │   │   └── mui/
+│   │   │       ├── App.tsx               # MUI demo template (TS)
+│   │   │       └── App.jsx               # MUI demo template (JS)
+│   │   ├── nextjs/                       # (coming soon)
+│   │   └── shared/                       # Shared static templates
 │   ├── utils/
-│   │   ├── welcome.ts            # CLI welcome screen
-│   │   ├── logger.ts             # Colored console output
-│   │   ├── spinner.ts            # Loading spinner helper
-│   │   ├── files.ts              # File/folder helpers
-│   │   └── install.ts            # Dependency installer
-│   └── index.ts                  # Entry point
+│   │   ├── welcome.ts                    # CLI welcome screen
+│   │   ├── logger.ts                     # Colored console output
+│   │   ├── spinner.ts                    # Loading spinner helper
+│   │   ├── files.ts                      # File/folder helpers
+│   │   └── install.ts                    # Dependency installer
+│   └── index.ts                          # Entry point
 ├── package.json
 ├── tsconfig.json
 └── README.md
