@@ -21,9 +21,14 @@ function getInitialMode(config: MuiConfig): string {
 }
 
 // ─── theme.ts ───
-export function generateMuiTheme(config: MuiConfig, isTypeScript: boolean): string {
+export function generateMuiTheme(
+  config: MuiConfig,
+  isTypeScript: boolean,
+): string {
   const primaryColor = getPrimaryColor(config);
-  const tsImport = isTypeScript ? `\nimport type { PaletteMode } from "@mui/material";` : "";
+  const tsImport = isTypeScript
+    ? `\nimport type { PaletteMode } from "@mui/material";`
+    : "";
   const modeType = isTypeScript ? "mode: PaletteMode" : "mode";
 
   return `
@@ -63,7 +68,10 @@ export default function ThemeToggle() {
 }
 
 // ─── ThemeContextProvider.tsx / .jsx ───
-export function generateThemeContextProvider(config: MuiConfig, isTypeScript: boolean): string {
+export function generateThemeContextProvider(
+  config: MuiConfig,
+  isTypeScript: boolean,
+): string {
   const initialMode = getInitialMode(config);
 
   const tsBlock = isTypeScript
@@ -82,8 +90,8 @@ const ThemeContext = createContext({});`;
   const savedType = isTypeScript ? " as ThemeMode | null" : "";
   const stateType = isTypeScript ? "<ThemeMode>" : "";
   const returnType = isTypeScript ? ": ThemeContextType" : "";
-  const childrenType = isTypeScript 
-    ? "({ children }: { children: React.ReactNode })" 
+  const childrenType = isTypeScript
+    ? "({ children }: { children: React.ReactNode })"
     : "({ children })";
 
   return `
@@ -120,20 +128,19 @@ export function useTheme()${returnType} {
 
 // ─── AppMuiThemeProvider.tsx / .jsx ───
 export function generateAppMuiThemeProvider(isTypeScript: boolean): string {
-  const propsType = isTypeScript ? "({ children }: { children: React.ReactNode })" : "({ children })";
+  const propsType = isTypeScript
+    ? "({ children }: { children: React.ReactNode })"
+    : "({ children })";
 
   return `
-import { createTheme, ThemeProvider as MuiThemeProvider } from "@mui/material/styles";
+import { ThemeProvider as MuiThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { useTheme } from "../context/ThemeContextProvider";
+import { createAppTheme } from "./theme";
 
 export default function AppMuiThemeProvider${propsType} {
   const { theme } = useTheme();
-  const muiTheme = createTheme({
-    palette: {
-      mode: theme,
-    },
-  });
+  const muiTheme = createAppTheme(theme);
 
   return (
     <MuiThemeProvider theme={muiTheme}>
