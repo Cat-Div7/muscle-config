@@ -1,11 +1,12 @@
 export function generateThemeToggle(isTypeScript: boolean): string {
-  // Add Types Saftey in case TypeScript is selected [ Later ]
+  const stateType = isTypeScript ? "<boolean>" : "";
+  const storageType = isTypeScript ? " as boolean" : "";
+
   return `
 import { useState, useEffect } from "react";
 
 export default function ThemeToggle() {
-  // You can replace this with ContextAPI later
-  const [dark, setDark] = useState(() => {
+  const [dark, setDark] = useState${stateType}(() => {
     return localStorage.getItem("theme") === "dark";
   });
 
