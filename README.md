@@ -42,6 +42,14 @@ Welcome screen
 │         ❯ Create in a new folder
 │           Use current directory
 │
+│     └── [ if current directory is not empty ]
+│               ⚠ Files detected: file1, file2 ...
+│
+│               Q: Creating a project here will overwrite existing files.
+│                  What would you like to do?
+│                       ❯ Cancel (recommended)
+│                         Continue anyway (deletes existing files)
+│
 ├── Q: Project name?                    ← only if "new folder"
 │         ❯ my-app
 │
