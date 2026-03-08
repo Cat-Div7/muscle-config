@@ -17,7 +17,7 @@ export async function welcome(): Promise<void> {
   const data: string = await new Promise((resolve, reject) => {
     figlet.text("MUSCLE CONFIG", { font: "Small" }, (err, result) => {
       if (err) reject(err);
-      else resolve(result || "");
+      else resolve(chalk.bold.cyan(result || ""));
     });
   });
 
