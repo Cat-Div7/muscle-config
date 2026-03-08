@@ -48,6 +48,16 @@ export async function createProject() {
     for (const feature of features) {
       await feature.run(projectPath);
     }
+
+    const runCommand =
+      config.directoryMode === "current" ? "" : `cd ${config.projectName} && `;
+
+    console.log("\n");
+    logger.success("Project created successfully!");
+    console.log("\n");
+    logger.dim("  Get started:");
+    logger.dim(`  ${runCommand}npm run dev`);
+    console.log("\n");
   } catch (error) {
     logger.error("Something went wrong during project creation.");
     await rollbackProject(projectPath, config.directoryMode);
