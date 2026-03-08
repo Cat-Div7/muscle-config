@@ -1,6 +1,5 @@
 export function generateThemeToggle(isTypeScript: boolean): string {
   const stateType = isTypeScript ? "<boolean>" : "";
-  const storageType = isTypeScript ? " as boolean" : "";
 
   return `
 import { useState, useEffect } from "react";
