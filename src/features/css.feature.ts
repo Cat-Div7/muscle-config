@@ -17,6 +17,9 @@ import {
   restoreSnapshots,
   rollbackFeature,
 } from "../utils/rollback.js";
+import { fileURLToPath } from "url";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export const cssFeature: Feature = {
   name: "css",
@@ -111,6 +114,25 @@ export const cssFeature: Feature = {
       }
 
       /**
+       * STEP 6
+       * Copy demo App template if user selected it
+       */
+      if (config.demo) {
+        spinner.start("Copying CSS demo template...");
+        const templateDir = path.join(__dirname, "../templates/react/css");
+        const appTemplatePath = path.join(
+          templateDir,
+          isTypeScript ? "App.tsx" : "App.jsx",
+        );
+        const appTargetPath = path.join(
+          projectPath,
+          isTypeScript ? "src/App.tsx" : "src/App.jsx",
+        );
+        await fs.copyFile(appTemplatePath, appTargetPath);
+        spinner.succeed("Demo template copied!");
+      }
+
+      /**
        * FINAL SUCCESS MESSAGE
        */
       logger.success("CSS setup complete!");
@@ -120,7 +142,9 @@ export const cssFeature: Feature = {
       await rollbackFeature([
         path.join(projectPath, "src/styles"),
         path.join(projectPath, "src/components/ThemeToggle.tsx"),
-        path.join(projectPath, "src/components/ThemeToggle.jsx"),
+        path.join(projectPath, "src/components/ThemeTogsted.jsx"),
+        path.join(projectPath, "src/App.tsx"),
+        path.join(projectPath, "src/App.jsx"),
       ]);
       throw error;
     }

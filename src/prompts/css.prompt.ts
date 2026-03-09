@@ -209,10 +209,25 @@ export async function askCssConfig(): Promise<CssConfig> {
       darkModeToggle: false,
       font: "none",
       separateFiles: false,
+      demo: false,
     };
   }
 
-  const answers = mode === "beginner" ? await askBeginner() : await askAdvanced();
+  const answers =
+    mode === "beginner" ? await askBeginner() : await askAdvanced();
+
+  let demo = false;
+  if (answers.darkModeToggle) {
+    const { wantDemo } = await inquirer.prompt([
+      {
+        type: "confirm",
+        name: "wantDemo",
+        message: "Override App.jsx with a CSS demo template?",
+        default: true,
+      },
+    ]);
+    demo = wantDemo;
+  }
 
   return {
     mode,
@@ -222,6 +237,7 @@ export async function askCssConfig(): Promise<CssConfig> {
     darkModeToggle: false,
     font: "none",
     separateFiles: false,
+    demo,
     ...answers,
   };
 }

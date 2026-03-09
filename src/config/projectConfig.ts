@@ -42,4 +42,5 @@ export interface CssConfig {
   darkModeToggle: boolean;
   font: FontChoice;
   separateFiles: boolean;
+  demo: boolean;
 }
