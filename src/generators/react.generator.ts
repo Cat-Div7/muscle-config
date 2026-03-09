@@ -43,6 +43,7 @@ export async function generateReactProject(config: ProjectConfig) {
       stdio: "ignore",
     });
     spinner.succeed("Dependencies installed!");
+    console.log("");
   } catch (error) {
     spinner.fail("Failed to scaffold project.");
     throw error;

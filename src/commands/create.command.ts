@@ -40,6 +40,7 @@ export async function createProject() {
 
   try {
     await generateReactProject(config);
+    console.log("");
 
     const features = [];
     if (config.styling === "tailwind") features.push(tailwindFeature);
@@ -52,9 +53,8 @@ export async function createProject() {
     const runCommand =
       config.directoryMode === "current" ? "" : `cd ${config.projectName} && `;
 
-    console.log("\n");
+    console.log("");
     logger.success("Project created successfully!");
-    console.log("\n");
     logger.dim("  Get started:");
     logger.dim(`  ${runCommand}npm run dev`);
     console.log("\n");
