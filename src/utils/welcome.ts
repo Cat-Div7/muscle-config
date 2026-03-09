@@ -52,4 +52,6 @@ export async function welcome(): Promise<void> {
   );
   console.log(divider);
   console.log("\n");
+
+  console.log(chalk.red('The Only Available Frontend Framework for now is [ React ]!!\n'))
 }
