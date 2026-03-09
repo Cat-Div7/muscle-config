@@ -10,7 +10,8 @@ export async function askStyling(): Promise<StylingChoice> {
       choices: [
         { name: "Tailwind CSS v4", value: "tailwind" },
         { name: "MUI (Material UI)", value: "mui" },
-        { name: "None (plain CSS)", value: "none" },
+        { name: "None (plain CSS)", value: "css" },
+        { name: "Skip", value: "none" },
       ],
     },
   ]);
