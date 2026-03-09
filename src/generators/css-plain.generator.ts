@@ -14,15 +14,18 @@ const fontMap: Record<string, string> = {
 };
 
 const fontImportMap: Record<string, string> = {
-  inter: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap",
-  poppins: "https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap",
-  cairo: "https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;700&display=swap",
+  inter:
+    "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap",
+  poppins:
+    "https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap",
+  cairo:
+    "https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;700&display=swap",
 };
 
 function getPrimaryColor(config: CssConfig): string {
   return config.colorPreset === "custom"
     ? (config.customColor ?? "#6366f1")
-    : colorMap[config.colorPreset] ?? "";
+    : (colorMap[config.colorPreset] ?? "");
 }
 
 // ─── reset.css ───
@@ -107,9 +110,10 @@ export function generateCssVariables(config: CssConfig): string {
 
 // ─── typography.css ───
 export function generateCssTypography(config: CssConfig): string {
-  const fontFamily = config.font !== "none"
-    ? `var(--font-base)`
-    : `system-ui, Avenir, Helvetica, Arial, sans-serif`;
+  const fontFamily =
+    config.font !== "none"
+      ? `var(--font-base)`
+      : `system-ui, Avenir, Helvetica, Arial, sans-serif`;
 
   return `
 body {
@@ -190,7 +194,9 @@ export function generateCssIndex(config: CssConfig): string {
   lines.push("");
   lines.push("/* ─── Typography ────────────────────────── */");
   lines.push(`body {`);
-  lines.push(`  font-family: ${config.font !== "none" ? "var(--font-base)" : "system-ui, Avenir, Helvetica, Arial, sans-serif"};`);
+  lines.push(
+    `  font-family: ${config.font !== "none" ? "var(--font-base)" : "system-ui, Avenir, Helvetica, Arial, sans-serif"};`,
+  );
   lines.push(`  font-size: 1rem;`);
   lines.push(`  color: #171717;`);
   lines.push(`}`);
@@ -199,12 +205,12 @@ export function generateCssIndex(config: CssConfig): string {
 }
 
 // ─── index.css (separate files mode) ───
-export function generateCssIndexWithImports(): string {
-  return `
-@import "./reset.css";
-@import "./variables.css";
-@import "./typography.css";
-`.trim();
+export function generateCssIndexWithImports(config: CssConfig): string {
+  const lines: string[] = [];
+  if (config.reset) lines.push(`@import "./styles/reset.css";`);
+  lines.push(`@import "./styles/variables.css";`);
+  lines.push(`@import "./styles/typography.css";`);
+  return lines.join("\n");
 }
 
 // ─── ThemeToggle.tsx / .jsx (plain CSS version) ───

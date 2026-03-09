@@ -12,7 +12,11 @@ import {
   generateCssIndexWithImports,
   generateCssThemeToggle,
 } from "../generators/css-plain.generator.js";
-import { saveSnapshot, restoreSnapshots, rollbackFeature } from "../utils/rollback.js";
+import {
+  saveSnapshot,
+  restoreSnapshots,
+  rollbackFeature,
+} from "../utils/rollback.js";
 
 export const cssFeature: Feature = {
   name: "css",
@@ -67,24 +71,16 @@ export const cssFeature: Feature = {
           generateCssTypography(config),
         );
 
-        await fs.writeFile(
-          path.join(stylesDir, "index.css"),
-          generateCssIndexWithImports(),
-        );
-
         spinner.succeed("CSS files generated!");
 
         /**
          * STEP 4
-         * Update src/index.css to import from styles/
+         * Overwrite src/index.css with imports pointing to styles/
          */
         spinner.start("Updating main CSS entry...");
         const mainCssPath = path.join(projectPath, "src/index.css");
         await saveSnapshot(mainCssPath);
-        await fs.writeFile(
-          mainCssPath,
-          `@import "./styles/index.css";\n`,
-        );
+        await fs.writeFile(mainCssPath, generateCssIndexWithImports(config));
         spinner.succeed("Main CSS entry updated!");
       } else {
         /**
