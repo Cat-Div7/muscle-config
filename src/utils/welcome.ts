@@ -12,14 +12,24 @@ function terminalLink(text: string, url: string): string {
 }
 
 export async function welcome(): Promise<void> {
-  await sleep();
+  // await sleep();
 
-  const data: string = await new Promise((resolve, reject) => {
-    figlet.text("MUSCLE CONFIG", { font: "Small" }, (err, result) => {
-      if (err) reject(err);
-      else resolve(chalk.bold.cyan(result || ""));
-    });
-  });
+  const [muscle, config] = await Promise.all([
+    new Promise<string>((resolve, reject) => {
+      figlet.text("MUSCLE", { font: "ANSI Shadow" }, (err, result) => {
+        if (err) reject(err);
+        else resolve(chalk.bold.cyan(result || ""));
+      });
+    }),
+    new Promise<string>((resolve, reject) => {
+      figlet.text("CONFIG", { font: "ANSI Shadow" }, (err, result) => {
+        if (err) reject(err);
+        else resolve(chalk.bold.cyan(result || ""));
+      });
+    }),
+  ]);
+
+  const data = `${muscle}\n${config}`;
 
   console.clear();
   console.log("\n");
