@@ -10,6 +10,7 @@ import { muiFeature } from "../features/mui.feature.js";
 import { checkCurrentDirectory } from "../utils/directory.js";
 import { rollbackProject } from "../utils/rollback.js";
 import { logger } from "../utils/logger.js";
+import { cssFeature } from "../features/css.feature.js";
 
 export async function createProject() {
   const directoryMode = await askDirectoryMode();
@@ -45,6 +46,7 @@ export async function createProject() {
     const features = [];
     if (config.styling === "tailwind") features.push(tailwindFeature);
     if (config.styling === "mui") features.push(muiFeature);
+    if (config.styling === "css") features.push(cssFeature);
 
     for (const feature of features) {
       await feature.run(projectPath);
