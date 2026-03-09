@@ -124,6 +124,51 @@ Welcome screen
           ❯ Yes
             No
 
+── If CSS ─────────────────────────────────────────────────────
+
+├── Q: CSS configuration mode?
+│         ❯ Beginner  (recommended)
+│           Advanced  (full control)
+│           Skip  (use Vite default)
+│
+├── [ Beginner ]
+│     │
+│     ├── Q: Add a CSS reset?
+│     │         ❯ Yes / No
+│     │
+│     ├── Q: Choose a primary color:
+│     │         ❯ Indigo / Emerald / Neutral / Custom HEX / Skip
+│     │
+│     └── Q: Enable dark mode?
+│               ❯ Yes  →  media strategy (automatic)
+│                 No
+│
+└── [ Advanced ]
+      │
+      ├── Q: Add a CSS reset?
+      │         ❯ Yes / No
+      │
+      ├── Q: Choose a primary color:
+      │         ❯ Indigo / Emerald / Neutral / Custom HEX / Skip
+      │
+      ├── Q: Enable dark mode?
+      │         ❯ Yes
+      │           No
+      │
+      │     └── Q: Dark mode strategy:
+      │                 ❯ Manual toggle (class)  (recommended)
+      │                   System preference (media)
+      │
+      │               └── Q: Add ThemeToggle component?  ← only if "class"
+      │                           ❯ Yes
+      │                             No
+      │
+      ├── Q: Choose a default font:
+      │         ❯ Inter / Poppins / Cairo / Skip
+      │
+      └── Q: Generate separate CSS files? (variables, reset, typography)
+                ❯ Yes  →  creates src/styles/ folder
+                  No   →  everything in one index.css
 
 ── If None ────────────────────────────────────────────────────
 
@@ -214,14 +259,14 @@ my-app/
 - [x] React + TypeScript/JavaScript
 - [x] Tailwind CSS v4
 - [x] MUI (Material UI)
-- [ ] Normal CSS utilities
+- [x] Normal CSS utilities
 - [ ] Feature-based and Layered architecture
-- [ ] Next.js support
-- [ ] Zustand + React Query setup
-- [ ] ESLint + Prettier pre-configured
-- [ ] Git init + initial commit
+- [x] Rollback on failure
 - [ ] Path aliases (@context, @themes, @root)
-- [ ] Rollback on failure
+- [ ] ESLint + Prettier pre-configured
+- [ ] Next.js support
+- [ ] Git init + initial commit
+- [ ] Zustand + React Query setup
 - [ ] Custom template support
 - [ ] Vue / Svelte support (future)
 
