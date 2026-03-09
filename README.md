@@ -169,6 +169,9 @@ Welcome screen
       └── Q: Generate separate CSS files? (variables, reset, typography)
                 ❯ Yes  →  creates src/styles/ folder
                   No   →  everything in one index.css
+      └── Q: Override App.jsx with a CSS demo template?  ← only if toggle = Yes
+                ❯ Yes
+                  No
 
 ── If None ────────────────────────────────────────────────────
 
@@ -260,8 +263,8 @@ my-app/
 - [x] Tailwind CSS v4
 - [x] MUI (Material UI)
 - [x] Normal CSS utilities
-- [ ] Feature-based and Layered architecture
 - [x] Rollback on failure
+- [ ] Feature-based and Layered architecture
 - [ ] Path aliases (@context, @themes, @root)
 - [ ] ESLint + Prettier pre-configured
 - [ ] Next.js support
@@ -283,10 +286,12 @@ muscle-config/
 │   ├── features/
 │   │   ├── feature.interface.ts          # Feature contract interface
 │   │   ├── tailwind.feature.ts           # Tailwind v4 setup orchestration
-│   │   └── mui.feature.ts                # MUI setup orchestration
+│   │   ├── mui.feature.ts                # MUI setup orchestration
+│   │   └── css.feature.ts                # Plain CSS setup orchestration
 │   ├── generators/
 │   │   ├── react.generator.ts            # React + Vite scaffolding
 │   │   ├── css.generator.ts              # Tailwind index.css generator
+│   │   ├── css-plain.generator.ts        # Plain CSS generator (reset, variables, typography)
 │   │   ├── tailwind.config.generator.ts  # tailwind.config.ts/js generator
 │   │   ├── toggle.generator.ts           # Tailwind ThemeToggle generator
 │   │   └── mui.generator.ts              # MUI files generator (theme, context, providers)
@@ -296,23 +301,28 @@ muscle-config/
 │   │   ├── framework.prompt.ts           # Framework selection prompt
 │   │   ├── styling.prompt.ts             # Styling solution prompt
 │   │   ├── tailwind.prompt.ts            # Tailwind configuration prompts
-│   │   └── mui.prompt.ts                 # MUI configuration prompts
-│   ├── templates/                        # Static template files
+│   │   ├── mui.prompt.ts                 # MUI configuration prompts
+│   │   └── css.prompt.ts                 # Plain CSS configuration prompts
+│   ├── templates/
 │   │   ├── react/
 │   │   │   ├── tailwind-v4/
 │   │   │   │   ├── vite.config.ts        # Vite config with Tailwind plugin (TS)
 │   │   │   │   ├── vite.config.js        # Vite config with Tailwind plugin (JS)
 │   │   │   │   └── index.css             # Base Tailwind CSS template
-│   │   │   └── mui/
-│   │   │       ├── App.tsx               # MUI demo template (TS)
-│   │   │       └── App.jsx               # MUI demo template (JS)
+│   │   │   ├── mui/
+│   │   │   │   ├── App.tsx               # MUI demo template (TS)
+│   │   │   │   └── App.jsx               # MUI demo template (JS)
+│   │   │   └── css/
+│   │   │       ├── App.tsx               # CSS demo template (TS)
+│   │   │       └── App.jsx               # CSS demo template (JS)
 │   │   ├── nextjs/                       # (coming soon)
 │   │   └── shared/                       # Shared static templates
 │   ├── utils/
 │   │   ├── welcome.ts                    # CLI welcome screen
 │   │   ├── logger.ts                     # Colored console output
 │   │   ├── spinner.ts                    # Loading spinner helper
-|   |   ├── directory.ts                  # Directory helpers (check, cleanup, etc.)
+│   │   ├── directory.ts                  # Directory check and cleanup helpers
+│   │   ├── rollback.ts                   # Project and feature rollback utilities
 │   │   ├── files.ts                      # File/folder helpers
 │   │   └── install.ts                    # Dependency installer
 │   └── index.ts                          # Entry point
