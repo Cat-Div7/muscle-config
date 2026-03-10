@@ -171,9 +171,9 @@ Welcome screen
       ├── Q: Choose a default font:
       │         ❯ Inter / Poppins / Cairo / Skip
       │
-      └── Q: Generate separate CSS files? (variables, reset, typography)
-                ❯ Yes  →  creates src/styles/ folder
-                  No   →  everything in one index.css
+      ├── Q: Generate separate CSS files? (variables, reset, typography)
+      │         ❯ Yes  →  creates src/styles/ folder
+      │           No   →  everything in one index.css
       └── Q: Override App.jsx with a CSS demo template?  ← only if toggle = Yes
                 ❯ Yes
                   No
