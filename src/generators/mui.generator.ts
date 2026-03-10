@@ -7,6 +7,18 @@ const colorMap: Record<string, string> = {
   green: "#2e7d32",
 };
 
+const fontImportMap: Record<string, string> = {
+  inter: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap",
+  poppins: "https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap",
+  cairo: "https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;700&display=swap",
+};
+
+const fontFamilyMap: Record<string, string> = {
+  inter: "Inter, sans-serif",
+  poppins: "Poppins, sans-serif",
+  cairo: "Cairo, sans-serif",
+};
+
 function getPrimaryColor(config: MuiConfig): string {
   return config.colorPreset === "custom"
     ? (config.customColor ?? "#1976d2")
@@ -170,5 +182,18 @@ createRoot(document.getElementById("root")${isTypeScript ? "!" : ""}).render(
     </ThemeContextProvider>
   </StrictMode>
 );
+`.trim();
+}
+
+// ─── index.css (MUI font setup) ───
+export function generateMuiIndexCss(config: MuiConfig): string {
+  if (config.font === "none") return "";
+
+  return `
+@import url('${fontImportMap[config.font]}');
+
+body {
+  font-family: ${fontFamilyMap[config.font]};
+}
 `.trim();
 }

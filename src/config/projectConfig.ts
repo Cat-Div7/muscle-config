@@ -27,9 +27,10 @@ export interface TailwindConfig {
 export interface MuiConfig {
   themeMode: "light" | "dark" | "system";
   darkModeToggle: boolean;
-  colorPreset: ColorPreset;
+  colorPreset: "blue" | "purple" | "green" | "custom";
   customColor?: string;
   icons: boolean;
+  font: FontChoice;
   demo: boolean;
 }
 

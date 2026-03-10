@@ -76,6 +76,20 @@ export async function askMuiConfig(): Promise<MuiConfig> {
     },
   ]);
 
+  const { font } = await inquirer.prompt([
+    {
+      type: "list",
+      name: "font",
+      message: "Choose a default font:",
+      choices: [
+        { name: "Inter   — clean, modern, readable", value: "inter" },
+        { name: "Poppins — rounded, great for dashboards", value: "poppins" },
+        { name: "Cairo   — elegant, great for bilingual apps", value: "cairo" },
+        { name: "Skip", value: "none" },
+      ],
+    },
+  ]);
+
   let demo = false;
   if (darkModeToggle) {
     const { wantDemo } = await inquirer.prompt([
@@ -95,6 +109,7 @@ export async function askMuiConfig(): Promise<MuiConfig> {
     colorPreset,
     customColor,
     icons,
+    font,
     demo,
   };
 }

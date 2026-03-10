@@ -11,9 +11,14 @@ import {
   generateThemeContextProvider,
   generateAppMuiThemeProvider,
   generateMuiMain,
+  generateMuiIndexCss,
 } from "../generators/mui.generator.js";
 import { fileURLToPath } from "url";
-import { restoreSnapshots, rollbackFeature, saveSnapshot } from "../utils/rollback.js";
+import {
+  restoreSnapshots,
+  rollbackFeature,
+  saveSnapshot,
+} from "../utils/rollback.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -76,6 +81,18 @@ export const muiFeature: Feature = {
       );
       await fs.writeFile(themeFile, generateMuiTheme(config, isTypeScript));
       spinner.succeed("MUI theme generated!");
+
+      /**
+       * STEP 5b
+       * Apply font to index.css if selected
+       */
+      if (config.font !== "none") {
+        spinner.start("Applying font...");
+        const indexCssPath = path.join(projectPath, "src/index.css");
+        await saveSnapshot(indexCssPath);
+        await fs.writeFile(indexCssPath, generateMuiIndexCss(config));
+        spinner.succeed("Font applied!");
+      }
 
       /**
        * STEP 6
@@ -169,6 +186,8 @@ export const muiFeature: Feature = {
         path.join(projectPath, "src/context"),
         path.join(projectPath, "src/components/ThemeToggle.tsx"),
         path.join(projectPath, "src/components/ThemeToggle.jsx"),
+        path.join(projectPath, "src/App.tsx"),
+        path.join(projectPath, "src/App.jsx"),
       ]);
       throw error;
     }
