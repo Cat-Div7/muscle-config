@@ -119,6 +119,11 @@ Welcome screen
 ├── Q: Add MUI Icons package? (@mui/icons-material)
 │         ❯ Yes
 │           No
+├── Q: Choose a default font:
+│         ❯ Inter   — clean, modern, readable
+│           Poppins — rounded, great for dashboards
+│           Cairo   — elegant, great for bilingual apps
+│           Skip
 │
 └── Q: Override App.jsx with a MUI demo template?  ← only if toggle = Yes
           ❯ Yes
