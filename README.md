@@ -34,6 +34,21 @@ If anything fails mid-installation, `muscle-config` automatically rolls back and
 
 ---
 
+## How It Works
+
+`muscle-config` asks you a series of questions and generates a complete, ready-to-code frontend project in seconds.
+```
+1. Where to create    → new folder or current directory
+2. Project name       → only if new folder
+3. Framework          → React + TypeScript or JavaScript
+4. Styling            → Tailwind CSS v4 / MUI / Plain CSS / None
+5. Architecture       → Feature-based / Layered / Skip
+```
+
+Each choice builds on the previous one. When done, you get a fully scaffolded project with the right folder structure, dependencies installed, and config files ready — no manual setup needed.
+
+---
+
 ## CLI Flow
 ```
 Welcome screen
