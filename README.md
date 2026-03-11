@@ -288,6 +288,7 @@ my-app/
 - [ ] Path aliases (@context, @themes, @root)
 - [ ] ESLint + Prettier pre-configured
 - [ ] Next.js support
+- [ ] Optional libraries (axios, lucide-react, framer-motion, react-query, etc..)
 - [ ] Git init + initial commit
 - [ ] Zustand + React Query setup
 - [ ] Custom template support
