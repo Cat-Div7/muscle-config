@@ -195,14 +195,15 @@ Welcome screen
                   No
 
 ── If None ────────────────────────────────────────────────────
-
+│
 └── → No extra steps, plain Vite CSS stays as-is
+
 
 ── Architecture ───────────────────────────────────────────────
 
 ├── Q: Choose architecture style:
-│         ❯ Feature-based  (recommended for large apps)
-│           Layered        (recommended for small/mid apps)
+│         ❯ Layered        (recommended for small/mid apps) - more popular
+│           Feature-based  (recommended for large apps)
 │           Skip
 │
 ├── [ Feature-based ]
