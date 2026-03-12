@@ -43,6 +43,7 @@ If anything fails mid-installation, `muscle-config` automatically rolls back and
 3. Framework          → React + TypeScript or JavaScript
 4. Styling            → Tailwind CSS v4 / MUI / Plain CSS / None
 5. Architecture       → Feature-based / Layered / Skip
+6. Done               → project is ready
 ```
 
 Each choice builds on the previous one. When done, you get a fully scaffolded project with the right folder structure, dependencies installed, and config files ready — no manual setup needed.
@@ -196,6 +197,42 @@ Welcome screen
 ── If None ────────────────────────────────────────────────────
 
 └── → No extra steps, plain Vite CSS stays as-is
+
+── Architecture ───────────────────────────────────────────────
+
+├── Q: Choose architecture style:
+│         ❯ Feature-based  (recommended for large apps)
+│           Layered        (recommended for small/mid apps)
+│           Skip
+│
+├── [ Feature-based ]
+│     │
+│     ├── Q: Select features to generate:
+│     │         ❯ ◉ auth  ○ dashboard  ○ profile
+│     │           ○ settings  ○ home  ○ products
+│     │           ○ cart  ○ checkout
+│     │
+│     ├── Q: Select folders inside each feature:
+│     │         ❯ ◉ components  ◉ hooks  ◉ services
+│     │           ○ utils  ○ types  ○ validators  ○ api
+│     │
+│     ├── Q: Select shared folders in src/:
+│     │         ❯ ◉ components  ◉ hooks  ◉ layouts  ◉ pages
+│     │           ○ services  ○ utils  ○ types  ○ assets
+│     │           ○ api  ○ validators  ○ templates
+│     │
+│     └── Q: Select folders to add an index file to:
+│               ❯ ○ components  ○ hooks  ○ services ...
+│
+└── [ Layered ]
+      │
+      ├── Q: Select folders in src/:
+      │         ❯ ◉ components  ◉ hooks  ◉ pages  ◉ layouts
+      │           ○ services  ○ utils  ○ types  ○ assets
+      │           ○ api  ○ validators  ○ templates
+      │
+      └── Q: Select folders to add an index file to:
+                ❯ ○ components  ○ hooks  ○ pages ...
 ```
 
 ---
@@ -284,7 +321,7 @@ my-app/
 - [x] MUI (Material UI)
 - [x] Normal CSS utilities
 - [x] Rollback on failure
-- [ ] Feature-based and Layered architecture
+- [x] Feature-based and Layered architecture
 - [ ] Path aliases (@context, @themes, @root)
 - [ ] ESLint + Prettier pre-configured
 - [ ] Next.js support
@@ -308,14 +345,16 @@ muscle-config/
 │   │   ├── feature.interface.ts          # Feature contract interface
 │   │   ├── tailwind.feature.ts           # Tailwind v4 setup orchestration
 │   │   ├── mui.feature.ts                # MUI setup orchestration
-│   │   └── css.feature.ts                # Plain CSS setup orchestration
+│   │   ├── css.feature.ts                # Plain CSS setup orchestration
+│   │   └── architecture.feature.ts       # Architecture folder generation
 │   ├── generators/
 │   │   ├── react.generator.ts            # React + Vite scaffolding
 │   │   ├── css.generator.ts              # Tailwind index.css generator
 │   │   ├── css-plain.generator.ts        # Plain CSS generator (reset, variables, typography)
 │   │   ├── tailwind.config.generator.ts  # tailwind.config.ts/js generator
 │   │   ├── toggle.generator.ts           # Tailwind ThemeToggle generator
-│   │   └── mui.generator.ts              # MUI files generator (theme, context, providers)
+│   │   ├── mui.generator.ts              # MUI files generator (theme, context, providers)
+│   │   └── architecture.generator.ts     # Folder structure generator
 │   ├── prompts/
 │   │   ├── directory.prompt.ts           # Output directory prompt
 │   │   ├── projectName.prompt.ts         # Project name prompt
@@ -323,7 +362,8 @@ muscle-config/
 │   │   ├── styling.prompt.ts             # Styling solution prompt
 │   │   ├── tailwind.prompt.ts            # Tailwind configuration prompts
 │   │   ├── mui.prompt.ts                 # MUI configuration prompts
-│   │   └── css.prompt.ts                 # Plain CSS configuration prompts
+│   │   ├── css.prompt.ts                 # Plain CSS configuration prompts
+│   │   └── architecture.prompt.ts        # Architecture configuration prompts
 │   ├── templates/
 │   │   ├── react/
 │   │   │   ├── tailwind-v4/
