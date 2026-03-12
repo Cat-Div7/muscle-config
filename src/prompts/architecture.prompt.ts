@@ -13,6 +13,8 @@ const allFolderChoices = [
   { name: "api", value: "api" },
   { name: "validators", value: "validators" },
   { name: "templates", value: "templates" },
+  { name: "themes", value: "themes" },
+  { name: "lib", value: "lib" },
 ];
 
 const featurePresets = [

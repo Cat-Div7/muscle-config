@@ -19,7 +19,9 @@ export type FolderChoice =
   | "assets"
   | "api"
   | "validators"
-  | "templates";
+  | "templates"
+  | "themes"
+  | "lib";
 
 export interface ProjectConfig {
   projectName?: string;

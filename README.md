@@ -221,6 +221,7 @@ Welcome screen
 │     │         ❯ ◉ components  ◉ hooks  ◉ layouts  ◉ pages
 │     │           ○ services  ○ utils  ○ types  ○ assets
 │     │           ○ api  ○ validators  ○ templates
+│     │           ○ themes  ○ lib
 │     │
 │     └── Q: Select folders to add an index file to:
 │               ❯ ○ components  ○ hooks  ○ services ...
