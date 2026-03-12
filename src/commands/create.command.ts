@@ -11,6 +11,7 @@ import { checkCurrentDirectory } from "../utils/directory.js";
 import { rollbackProject } from "../utils/rollback.js";
 import { logger } from "../utils/logger.js";
 import { cssFeature } from "../features/css.feature.js";
+import { askArchitecture } from "../prompts/architecture.prompt.js";
 
 export async function createProject() {
   const directoryMode = await askDirectoryMode();
@@ -26,12 +27,14 @@ export async function createProject() {
 
   const framework = await askFramework();
   const styling = await askStyling();
+  const architecture = await askArchitecture();
 
   const config: ProjectConfig = {
     projectName,
     framework,
     directoryMode,
     styling,
+    architecture,
   };
 
   const projectPath =
