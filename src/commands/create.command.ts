@@ -12,6 +12,7 @@ import { rollbackProject } from "../utils/rollback.js";
 import { logger } from "../utils/logger.js";
 import { cssFeature } from "../features/css.feature.js";
 import { askArchitecture } from "../prompts/architecture.prompt.js";
+import { createArchitectureFeature } from "../features/architecture.feature.js";
 
 export async function createProject() {
   const directoryMode = await askDirectoryMode();
@@ -50,6 +51,8 @@ export async function createProject() {
     if (config.styling === "tailwind") features.push(tailwindFeature);
     if (config.styling === "mui") features.push(muiFeature);
     if (config.styling === "css") features.push(cssFeature);
+    if (config.architecture.style !== "skip")
+      features.push(createArchitectureFeature(config.architecture));
 
     for (const feature of features) {
       await feature.run(projectPath);
