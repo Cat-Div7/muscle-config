@@ -33,8 +33,8 @@ export async function askArchitecture(): Promise<ArchitectureConfig> {
       name: "style",
       message: "Choose architecture style:",
       choices: [
+        { name: "Layered        (recommended for small/mid apps) - more popular", value: "layered" },
         { name: "Feature-based  (recommended for large apps)", value: "feature-based" },
-        { name: "Layered        (recommended for small/mid apps)", value: "layered" },
         { name: "Skip", value: "skip" },
       ],
     },
