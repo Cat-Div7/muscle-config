@@ -38,6 +38,7 @@ export interface TailwindConfig {
   colorPreset: ColorPreset;
   customColor?: string;
   font: FontChoice;
+  prettierTailwind: boolean;
 }
 
 export interface MuiConfig {

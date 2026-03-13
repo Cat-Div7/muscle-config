@@ -3,10 +3,22 @@ import chalk from "chalk";
 import type { TailwindConfig } from "../config/projectConfig.js";
 
 const colorChoices = [
-  { name: chalk.bgHex("#6366f1").white("  indigo  ") + "  Indigo", value: "indigo" },
-  { name: chalk.bgHex("#10b981").black("  emerald ") + "  Emerald", value: "emerald" },
-  { name: chalk.bgHex("#737373").white("  neutral ") + "  Neutral", value: "neutral" },
-  { name: chalk.bgHex("#e11d48").white("  custom  ") + "  Custom HEX", value: "custom" },
+  {
+    name: chalk.bgHex("#6366f1").white("  indigo  ") + "  Indigo",
+    value: "indigo",
+  },
+  {
+    name: chalk.bgHex("#10b981").black("  emerald ") + "  Emerald",
+    value: "emerald",
+  },
+  {
+    name: chalk.bgHex("#737373").white("  neutral ") + "  Neutral",
+    value: "neutral",
+  },
+  {
+    name: chalk.bgHex("#e11d48").white("  custom  ") + "  Custom HEX",
+    value: "custom",
+  },
   { name: "  Skip", value: "none" },
 ];
 
@@ -15,7 +27,7 @@ const fontChoices = [
   { name: "Poppins — great for dashboards & landing pages", value: "poppins" },
   { name: "Cairo   — works great for bilingual apps", value: "cairo" },
   { name: "Skip", value: "none" },
-]
+];
 
 // Beginner mode asks only essential questions with simplified options
 async function askBeginner(): Promise<Partial<TailwindConfig>> {
@@ -135,7 +147,7 @@ async function askAdvanced(): Promise<Partial<TailwindConfig>> {
       type: "list",
       name: "font",
       message: "Choose default font:",
-      choices: fontChoices
+      choices: fontChoices,
     },
   ]);
 
@@ -161,7 +173,17 @@ export async function askTailwindConfig(): Promise<TailwindConfig> {
     },
   ]);
 
-  const answers = mode === "beginner" ? await askBeginner() : await askAdvanced();
+  const answers =
+    mode === "beginner" ? await askBeginner() : await askAdvanced();
+
+  const { prettierTailwind } = await inquirer.prompt([
+    {
+      type: "confirm",
+      name: "prettierTailwind",
+      message: "Add Prettier plugin for Tailwind class sorting? (recommended)",
+      default: true,
+    },
+  ]);
 
   return {
     mode,
@@ -169,6 +191,7 @@ export async function askTailwindConfig(): Promise<TailwindConfig> {
     darkModeToggle: false,
     colorPreset: "none",
     font: "none",
+    prettierTailwind,
     ...answers,
   };
 }
