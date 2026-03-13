@@ -331,7 +331,7 @@ my-app/
 - [x] Rollback on failure
 - [x] Feature-based and Layered architecture
 - [ ] Path aliases (@context, @themes, @root)
-- [ ] ESLint + Prettier pre-configured
+- [ ] Prettier pre-configured
 - [ ] Next.js support
 - [ ] Optional libraries (axios, lucide-react, framer-motion, react-query, etc..)
 - [ ] Git init + initial commit
