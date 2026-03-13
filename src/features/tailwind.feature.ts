@@ -9,7 +9,12 @@ import { askTailwindConfig } from "../prompts/tailwind.prompt.js";
 import { generateIndexCss } from "../generators/css.generator.js";
 import { generateThemeToggle } from "../generators/toggle.generator.js";
 import { generateTailwindConfig } from "../generators/tailwind.config.generator.js";
-import { restoreSnapshots, rollbackFeature, saveSnapshot } from "../utils/rollback.js";
+import {
+  restoreSnapshots,
+  rollbackFeature,
+  saveSnapshot,
+} from "../utils/rollback.js";
+import { installPackages } from "../utils/install.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -129,6 +134,30 @@ export const tailwindFeature: Feature = {
 
       /**
        * STEP 8
+       * Install and configure Prettier plugin for Tailwind if selected
+       */
+      if (config.prettierTailwind) {
+        spinner.start("Installing Prettier + Tailwind plugin...");
+        await installPackages(
+          ["prettier", "prettier-plugin-tailwindcss"],
+          projectPath,
+          true,
+        );
+        spinner.succeed("Prettier installed!");
+
+        spinner.start("Creating .prettierrc...");
+        const prettierConfig = {
+          plugins: ["prettier-plugin-tailwindcss"],
+        };
+        await fs.writeFile(
+          path.join(projectPath, ".prettierrc"),
+          JSON.stringify(prettierConfig, null, 2),
+        );
+        spinner.succeed(".prettierrc created!");
+      }
+
+      /**
+       * STEP 9
        * Install optional Tailwind plugins selected by the user
        */
       // if (config.plugins.length > 0) {
@@ -153,6 +182,7 @@ export const tailwindFeature: Feature = {
         path.join(projectPath, "tailwind.config.js"),
         path.join(projectPath, "src/components/ThemeToggle.tsx"),
         path.join(projectPath, "src/components/ThemeToggle.jsx"),
+        path.join(projectPath, ".prettierrc"),
       ]);
       throw error;
     }
