@@ -6,7 +6,7 @@
 
 ---
 
-## Usage (Not Available for now)
+## Quick Start (Not Available for now yet)
 
 ```bash
 npx muscle-config
@@ -42,7 +42,7 @@ If anything fails mid-installation, `muscle-config` automatically rolls back and
 2. Project name       → only if new folder
 3. Framework          → React + TypeScript or JavaScript
 4. Styling            → Tailwind CSS v4 / MUI / Plain CSS / None
-5.Styling config     → options specific to chosen styling solution
+5. Styling config     → options specific to chosen styling solution
 6. Architecture       → Feature-based / Layered / Skip
 7. Done               → project is ready
 ```
@@ -244,43 +244,6 @@ Welcome screen
 ```
 
 ---
-
-## Local Development & How To Use
-
-Clone the repo and install dependencies:
-```bash
-# HTTP
-git clone https://github.com/Cat-Div7/muscle-config.git
-# SSH
-git clone git@github.com:Cat-Div7/muscle-config.git
-
-# Install Dependencies
-cd muscle-config
-npm install
-```
-
-Build and Run the project:
-```bash
-npm run build
-npm run start
-```
-
-Link globally to use the `muscle-config` command anywhere on your machine:
-```bash
-npm link
-```
-
-Now you can run:
-```bash
-muscle-config
-```
-
-To unlink when you're done:
-```bash
-npm unlink -g muscle-config
-```
----
-
 
 ## 🛠 Supported Options
 
