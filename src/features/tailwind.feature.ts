@@ -29,9 +29,11 @@ export function tailwindFeature(config: TailwindConfig): Feature {
          * Install Tailwind v4 and the Vite plugin
          */
         spinner.start("Installing Tailwind v4...");
-        await execa("npm", ["install", "tailwindcss", "@tailwindcss/vite"], {
-          cwd: projectPath,
-        });
+        await execa(
+          "npm",
+          ["install", "tailwindcss", "@tailwindcss/vite", "--legacy-peer-deps"],
+          { cwd: projectPath },
+        );
         spinner.succeed("Tailwind installed!");
 
         /**

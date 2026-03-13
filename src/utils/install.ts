@@ -6,7 +6,7 @@ export async function installPackages(
   dev: boolean = false,
 ): Promise<void> {
   const flag = dev ? ["--save-dev"] : [];
-  await execa("npm", ["install", ...flag, ...packages], {
+  await execa("npm", ["install", ...flag, "--legacy-peer-deps", ...packages], {
     cwd: projectPath,
   });
 }
