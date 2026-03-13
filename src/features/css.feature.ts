@@ -1,9 +1,10 @@
 import fs from "fs/promises";
 import path from "path";
+import { fileURLToPath } from "url";
 import { spinner } from "../utils/spinner.js";
 import { logger } from "../utils/logger.js";
 import type { Feature } from "./feature.interface.js";
-import { askCssConfig } from "../prompts/css.prompt.js";
+import type { CssConfig } from "../config/projectConfig.js";
 import {
   generateCssReset,
   generateCssVariables,
@@ -17,136 +18,130 @@ import {
   restoreSnapshots,
   rollbackFeature,
 } from "../utils/rollback.js";
-import { fileURLToPath } from "url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-export const cssFeature: Feature = {
-  name: "css",
+export function cssFeature(config: CssConfig): Feature {
+  return {
+    name: "css",
 
-  async run(projectPath: string) {
-    try {
-      /**
-       * STEP 1
-       * Ask the developer for CSS configuration options
-       */
-      const config = await askCssConfig();
-
-      if (config.mode === "skip") {
-        logger.info("Skipping CSS configuration — using Vite default.");
-        return;
-      }
-
-      /**
-       * STEP 2
-       * Detect TypeScript or JavaScript
-       */
-      const tsConfigPath = path.join(projectPath, "vite.config.ts");
-      let isTypeScript = false;
+    async run(projectPath: string) {
       try {
-        await fs.access(tsConfigPath);
-        isTypeScript = true;
-      } catch {}
-
-      /**
-       * STEP 3
-       * Generate CSS files
-       */
-      if (config.separateFiles) {
-        spinner.start("Generating CSS files...");
-        const stylesDir = path.join(projectPath, "src/styles");
-        await fs.mkdir(stylesDir, { recursive: true });
-
-        if (config.reset) {
-          await fs.writeFile(
-            path.join(stylesDir, "reset.css"),
-            generateCssReset(),
-          );
+        if (config.mode === "skip") {
+          logger.info("Skipping CSS configuration — using Vite default.");
+          return;
         }
 
-        await fs.writeFile(
-          path.join(stylesDir, "variables.css"),
-          generateCssVariables(config),
-        );
+        /**
+         * STEP 1
+         * Detect TypeScript or JavaScript
+         */
+        const tsConfigPath = path.join(projectPath, "vite.config.ts");
+        let isTypeScript = false;
+        try {
+          await fs.access(tsConfigPath);
+          isTypeScript = true;
+        } catch {}
 
-        await fs.writeFile(
-          path.join(stylesDir, "typography.css"),
-          generateCssTypography(config),
-        );
+        /**
+         * STEP 2
+         * Generate CSS files — separate files or single file mode
+         */
+        if (config.separateFiles) {
+          spinner.start("Generating CSS files...");
+          const stylesDir = path.join(projectPath, "src/styles");
+          await fs.mkdir(stylesDir, { recursive: true });
 
-        spinner.succeed("CSS files generated!");
+          if (config.reset) {
+            await fs.writeFile(
+              path.join(stylesDir, "reset.css"),
+              generateCssReset(),
+            );
+          }
+
+          await fs.writeFile(
+            path.join(stylesDir, "variables.css"),
+            generateCssVariables(config),
+          );
+
+          await fs.writeFile(
+            path.join(stylesDir, "typography.css"),
+            generateCssTypography(config),
+          );
+          spinner.succeed("CSS files generated!");
+
+          /**
+           * STEP 3 (separate files)
+           * Overwrite src/index.css with @import statements pointing to styles/
+           */
+          spinner.start("Updating main CSS entry...");
+          const mainCssPath = path.join(projectPath, "src/index.css");
+          await saveSnapshot(mainCssPath);
+          await fs.writeFile(mainCssPath, generateCssIndexWithImports(config));
+          spinner.succeed("Main CSS entry updated!");
+        } else {
+          /**
+           * STEP 2 (single file)
+           * Overwrite src/index.css with all generated styles inline
+           */
+          spinner.start("Generating CSS styles...");
+          const mainCssPath = path.join(projectPath, "src/index.css");
+          await saveSnapshot(mainCssPath);
+          await fs.writeFile(mainCssPath, generateCssIndex(config));
+          spinner.succeed("CSS styles generated!");
+        }
 
         /**
          * STEP 4
-         * Overwrite src/index.css with imports pointing to styles/
+         * Generate ThemeToggle component if class dark mode + toggle selected
          */
-        spinner.start("Updating main CSS entry...");
-        const mainCssPath = path.join(projectPath, "src/index.css");
-        await saveSnapshot(mainCssPath);
-        await fs.writeFile(mainCssPath, generateCssIndexWithImports(config));
-        spinner.succeed("Main CSS entry updated!");
-      } else {
+        if (config.darkModeToggle) {
+          spinner.start("Creating ThemeToggle component...");
+          const componentDir = path.join(projectPath, "src/components");
+          await fs.mkdir(componentDir, { recursive: true });
+          const toggleFile = path.join(
+            componentDir,
+            isTypeScript ? "ThemeToggle.tsx" : "ThemeToggle.jsx",
+          );
+          await fs.writeFile(toggleFile, generateCssThemeToggle(isTypeScript));
+          spinner.succeed("ThemeToggle component created!");
+        }
+
         /**
-         * STEP 3 (single file mode)
-         * Overwrite src/index.css with generated content
+         * STEP 5
+         * Copy demo App template if user selected it
          */
-        spinner.start("Generating CSS styles...");
-        const mainCssPath = path.join(projectPath, "src/index.css");
-        await saveSnapshot(mainCssPath);
-        await fs.writeFile(mainCssPath, generateCssIndex(config));
-        spinner.succeed("CSS styles generated!");
-      }
+        if (config.demo) {
+          spinner.start("Copying CSS demo template...");
+          const templateDir = path.join(__dirname, "../templates/react/css");
+          const appTemplatePath = path.join(
+            templateDir,
+            isTypeScript ? "App.tsx" : "App.jsx",
+          );
+          const appTargetPath = path.join(
+            projectPath,
+            isTypeScript ? "src/App.tsx" : "src/App.jsx",
+          );
+          await fs.copyFile(appTemplatePath, appTargetPath);
+          spinner.succeed("Demo template copied!");
+        }
 
-      /**
-       * STEP 5
-       * Generate ThemeToggle component if class dark mode selected
-       */
-      if (config.darkModeToggle) {
-        spinner.start("Creating ThemeToggle component...");
-        const componentDir = path.join(projectPath, "src/components");
-        await fs.mkdir(componentDir, { recursive: true });
-        const toggleFile = path.join(
-          componentDir,
-          isTypeScript ? "ThemeToggle.tsx" : "ThemeToggle.jsx",
-        );
-        await fs.writeFile(toggleFile, generateCssThemeToggle(isTypeScript));
-        spinner.succeed("ThemeToggle component created!");
+        /**
+         * FINAL SUCCESS MESSAGE
+         */
+        logger.success("CSS setup complete!");
+      } catch (error) {
+        spinner.fail("Failed to setup CSS.");
+        await restoreSnapshots();
+        await rollbackFeature([
+          path.join(projectPath, "src/styles"),
+          path.join(projectPath, "src/components/ThemeToggle.tsx"),
+          path.join(projectPath, "src/components/ThemeToggle.jsx"),
+          path.join(projectPath, "src/App.tsx"),
+          path.join(projectPath, "src/App.jsx"),
+        ]);
+        throw error;
       }
-
-      /**
-       * STEP 6
-       * Copy demo App template if user selected it
-       */
-      if (config.demo) {
-        spinner.start("Copying CSS demo template...");
-        const templateDir = path.join(__dirname, "../templates/react/css");
-        const appTemplatePath = path.join(
-          templateDir,
-          isTypeScript ? "App.tsx" : "App.jsx",
-        );
-        const appTargetPath = path.join(
-          projectPath,
-          isTypeScript ? "src/App.tsx" : "src/App.jsx",
-        );
-        await fs.copyFile(appTemplatePath, appTargetPath);
-        spinner.succeed("Demo template copied!");
-      }
-
-      /**
-       * FINAL SUCCESS MESSAGE
-       */
-      logger.success("CSS setup complete!");
-    } catch (error) {
-      spinner.fail("Failed to setup CSS.");
-      await restoreSnapshots();
-      await rollbackFeature([
-        path.join(projectPath, "src/styles"),
-        path.join(projectPath, "src/components/ThemeToggle.tsx"),
-        path.join(projectPath, "src/components/ThemeTogsted.jsx"),
-        path.join(projectPath, "src/App.tsx"),
-        path.join(projectPath, "src/App.jsx"),
-      ]);
-      throw error;
-    }
-  },
-};
+    },
+  };
+}
