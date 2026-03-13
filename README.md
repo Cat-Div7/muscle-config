@@ -42,8 +42,9 @@ If anything fails mid-installation, `muscle-config` automatically rolls back and
 2. Project name       → only if new folder
 3. Framework          → React + TypeScript or JavaScript
 4. Styling            → Tailwind CSS v4 / MUI / Plain CSS / None
-5. Architecture       → Feature-based / Layered / Skip
-6. Done               → project is ready
+5.Styling config     → options specific to chosen styling solution
+6. Architecture       → Feature-based / Layered / Skip
+7. Done               → project is ready
 ```
 
 Each choice builds on the previous one. When done, you get a fully scaffolded project with the right folder structure, dependencies installed, and config files ready — no manual setup needed.
@@ -77,6 +78,7 @@ Welcome screen
           ❯ Tailwind CSS v4
             MUI (Material UI)
             None (plain CSS)
+            Skip
 
 
 ── If Tailwind ────────────────────────────────────────────────
@@ -92,30 +94,34 @@ Welcome screen
 │     │           No
 │     │
 │     └── Q: Choose a primary color:
-│                 ❯ Indigo / Emerald / Neutral / Custom HEX / Skip
+│               ❯ Indigo / Emerald / Neutral / Custom HEX / Skip
 │
-└── [ Advanced ]
-      │
-      ├── Q: Enable Dark Mode?
-      │         ❯ Yes
-      │           No
-      │
-      │     └── Q: Dark Mode strategy:
-      │                 ❯ Manual toggle (class)  (recommended)
-      │                   System preference (media)
-      │
-      │               └── Q: Add ThemeToggle component?  ← only if "class"
-      │                           ❯ Yes
-      │                             No
-      │
-      ├── Q: Choose a primary color:
-      │         ❯ Indigo / Emerald / Neutral / Custom HEX / Skip
-      │
-      └── Q: Choose default font:
-                ❯ Inter   — clean, modern, readable
-                  Poppins — rounded, great for dashboards
-                  Cairo   — elegant, great for bilingual apps
-                  Skip
+├── [ Advanced ]
+│     │
+│     ├── Q: Enable Dark Mode?
+│     │         ❯ Yes
+│     │           No
+│     │
+│     │     └── Q: Dark Mode strategy:
+│     │                 ❯ Manual toggle (class)  (recommended)
+│     │                   System preference (media)
+│     │
+│     │               └── Q: Add ThemeToggle component?  ← only if "class"
+│     │                           ❯ Yes
+│     │                             No
+│     │
+│     ├── Q: Choose a primary color:
+│     │         ❯ Indigo / Emerald / Neutral / Custom HEX / Skip
+│     │
+│     └── Q: Choose default font:
+│               ❯ Inter   — clean, modern, readable
+│                 Poppins — rounded, great for dashboards
+│                 Cairo   — elegant, great for bilingual apps
+│                 Skip
+│
+└── Q: Add Prettier plugin for Tailwind class sorting? (recommended)
+          ❯ Yes                                    ← fires for both Beginner and Advanced
+            No
 
 
 ── If MUI ─────────────────────────────────────────────────────
