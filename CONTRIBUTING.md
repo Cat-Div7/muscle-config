@@ -13,6 +13,43 @@ Contributions are welcome. please open an issue to discuss what you'd like to ch
 
 ---
 
+## How To Use
+
+Clone the repo and install dependencies:
+```bash
+# HTTP
+git clone https://github.com/Cat-Div7/muscle-config.git
+# SSH
+git clone git@github.com:Cat-Div7/muscle-config.git
+
+# Install Dependencies
+cd muscle-config
+npm install
+```
+
+Build and Run the project:
+```bash
+npm run build
+npm run start
+```
+
+Link globally to use the `muscle-config` command anywhere on your machine:
+```bash
+npm link
+```
+
+Now you can run:
+```bash
+muscle-config
+```
+
+To unlink when you're done:
+```bash
+npm unlink -g muscle-config
+```
+
+---
+
 **Commit Format:**
 
 ```
