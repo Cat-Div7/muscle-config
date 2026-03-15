@@ -10,7 +10,7 @@
     "start": "node dist/index.js"
   },
   "bin": {
-    "muscle-config": "./dist/index.js"
+    "muscle-config": "dist/index.js"
   },
   "files": [
     "dist"
@@ -32,7 +32,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Cat-Div7/muscle-config.git"
+    "url": "git+https://github.com/Cat-Div7/muscle-config.git"
   },
   "homepage": "https://github.com/Cat-Div7/muscle-config#readme",
   "bugs": {
