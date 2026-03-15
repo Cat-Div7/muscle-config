@@ -44,6 +44,7 @@ If anything fails mid-installation, `muscle-config` automatically rolls back and
 4. Styling            → Tailwind CSS v4 / MUI / Plain CSS / None
 5. Styling config     → options specific to chosen styling solution
 6. Architecture       → Feature-based / Layered / Skip
+7. Prettier           → formatting config, merges with Tailwind plugin if present
 7. Done               → project is ready
 ```
 
@@ -241,6 +242,26 @@ Welcome screen
       │
       └── Q: Select folders to add an index file to:
                 ❯ ○ components  ○ hooks  ○ pages ...
+
+── Prettier ───────────────────────────────────────────────────
+│
+├── Q: Add Prettier?
+│         ❯ Yes
+│           No
+│
+├── Q: Use single quotes?
+│         ❯ Yes / No
+│
+├── Q: Use semicolons?
+│         ❯ Yes / No
+│
+└── Q: Tab width:
+          ❯ 2 spaces  (recommended)
+            4 spaces
+
+  [ if Tailwind + prettierTailwind was selected ]
+  → .prettierrc already exists with plugin config
+  → formatting prefs are merged in, plugin is preserved
 ```
 
 ---
