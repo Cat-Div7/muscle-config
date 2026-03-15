@@ -301,7 +301,6 @@ Welcome screen
 ---
 
 ## 🗂 Example Output Structure
-
 ```
 my-app/
 ├── src/
@@ -310,17 +309,21 @@ my-app/
 │   │       ├── components/
 │   │       ├── hooks/
 │   │       └── services/
-│   ├── layouts/
-│   ├── ui/
+│   ├── components/
 │   ├── hooks/
-│   ├── services/
+│   ├── layouts/
+│   ├── pages/
 │   ├── types/
 │   ├── utils/
+│   ├── index.css
+│   ├── App.tsx
 │   └── main.tsx
 ├── public/
 ├── tsconfig.json
 ├── .eslintrc.json
 ├── tailwind.config.ts
+├── .prettierrc
+├── .prettierignore
 └── package.json
 ```
 
@@ -358,7 +361,9 @@ muscle-config/
 │   │   ├── tailwind.feature.ts           # Tailwind v4 setup orchestration
 │   │   ├── mui.feature.ts                # MUI setup orchestration
 │   │   ├── css.feature.ts                # Plain CSS setup orchestration
-│   │   └── architecture.feature.ts       # Architecture folder generation
+│   │   ├── architecture.feature.ts       # Architecture folder generation
+│   │   ├── prettier.feature.ts           # Prettier setup + .prettierrc merge
+│   │   └── git.feature.ts                # Git init + initial commit
 │   ├── generators/
 │   │   ├── react.generator.ts            # React + Vite scaffolding
 │   │   ├── css.generator.ts              # Tailwind index.css generator
@@ -375,7 +380,9 @@ muscle-config/
 │   │   ├── tailwind.prompt.ts            # Tailwind configuration prompts
 │   │   ├── mui.prompt.ts                 # MUI configuration prompts
 │   │   ├── css.prompt.ts                 # Plain CSS configuration prompts
-│   │   └── architecture.prompt.ts        # Architecture configuration prompts
+│   │   ├── architecture.prompt.ts        # Architecture configuration prompts
+│   │   ├── prettier.prompt.ts            # Prettier configuration prompts
+│   │   └── git.prompt.ts                 # Git configuration prompts
 │   ├── templates/
 │   │   ├── react/
 │   │   │   ├── tailwind-v4/
@@ -389,14 +396,14 @@ muscle-config/
 │   │   │       ├── App.tsx               # CSS demo template (TS)
 │   │   │       └── App.jsx               # CSS demo template (JS)
 │   │   ├── nextjs/                       # (coming soon)
-│   │   └── shared/                       # Shared static templates
+│   │   └── shared/                       # Shared static templates (coming soon)
 │   ├── utils/
 │   │   ├── welcome.ts                    # CLI welcome screen
 │   │   ├── logger.ts                     # Colored console output
 │   │   ├── spinner.ts                    # Loading spinner helper
 │   │   ├── directory.ts                  # Directory check and cleanup helpers
 │   │   ├── rollback.ts                   # Project and feature rollback utilities
-│   │   ├── files.ts                      # File/folder helpers
+│   │   ├── files.ts                      # File/folder helpers (Not Available for now)
 │   │   └── install.ts                    # Dependency installer
 │   └── index.ts                          # Entry point
 ├── package.json
