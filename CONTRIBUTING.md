@@ -11,6 +11,27 @@ Contributions are welcome. please open an issue to discuss what you'd like to ch
 5. Push to your branch: `git push origin feat/your-feature-name`
 6. Open a Pull Request
 
+
+
+---
+
+**Commit Format:**
+
+```
+type(scope): short description
+```
+
+**Examples:**
+
+```
+feat(generator): add Next.js scaffolding support
+fix(install): handle rollback on failed npm install
+docs(readme): update roadmap section
+refactor(prompts): simplify framework selection logic
+```
+
+**Types**: `feat` · `fix` · `docs` · `refactor` · `chore` · `etc..`
+
 ---
 
 ## How To Use
@@ -47,22 +68,3 @@ To unlink when you're done:
 ```bash
 npm unlink -g muscle-config
 ```
-
----
-
-**Commit Format:**
-
-```
-type(scope): short description
-```
-
-**Examples:**
-
-```
-feat(generator): add Next.js scaffolding support
-fix(install): handle rollback on failed npm install
-docs(readme): update roadmap section
-refactor(prompts): simplify framework selection logic
-```
-
-**Types**: `feat` · `fix` · `docs` · `refactor` · `chore` · `etc..`
