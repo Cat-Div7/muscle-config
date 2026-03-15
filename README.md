@@ -314,13 +314,13 @@ my-app/
 - [x] Normal CSS utilities
 - [x] Rollback on failure
 - [x] Feature-based and Layered architecture
-- [ ] Path aliases (@context, @themes, @root)
-- [ ] Prettier pre-configured
-- [ ] Next.js support
-- [ ] Optional libraries (axios, lucide-react, framer-motion, react-query, etc..)
+- [x] Prettier pre-configured
 - [ ] Git init + initial commit
+- [ ] Path aliases (@context, @themes, @root)
+- [ ] Optional libraries (axios, lucide-react, framer-motion, react-query, etc..)
 - [ ] Zustand + React Query setup
 - [ ] Custom template support
+- [ ] Next.js support
 - [ ] Vue / Svelte support (future)
 
 ---
