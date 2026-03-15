@@ -45,14 +45,15 @@ If anything fails mid-installation, `muscle-config` automatically rolls back and
 5. Styling config     → options specific to chosen styling solution
 6. Architecture       → Feature-based / Layered / Skip
 7. Prettier           → formatting config, merges with Tailwind plugin if present
-7. Done               → project is ready
+8. Git                → optional git init + initial commit
+9. Done               → project is ready
 ```
 
 Each choice builds on the previous one. When done, you get a fully scaffolded project with the right folder structure, dependencies installed, and config files ready — no manual setup needed.
 
 ---
 
-## CLI Flow
+## CLI Flow (For More Details)
 ```
 Welcome screen
 │
@@ -262,6 +263,22 @@ Welcome screen
   [ if Tailwind + prettierTailwind was selected ]
   → .prettierrc already exists with plugin config
   → formatting prefs are merged in, plugin is preserved
+
+── Git ────────────────────────────────────────────────────────
+│
+├── Q: Initialize a Git repository?
+│         ❯ Yes
+│           No
+│
+└── [ if Yes ]
+      │
+      ├── Q: Create an initial commit?
+      │         ❯ Yes
+      │           No
+      │
+      └── [ if Yes ]
+                → commit message: "chore: initial commit"
+
 ```
 
 ---
@@ -315,7 +332,7 @@ my-app/
 - [x] Rollback on failure
 - [x] Feature-based and Layered architecture
 - [x] Prettier pre-configured
-- [ ] Git init + initial commit
+- [x] Git init + initial commit
 - [ ] Path aliases (@context, @themes, @root)
 - [ ] Optional libraries (axios, lucide-react, framer-motion, react-query, etc..)
 - [ ] Zustand + React Query setup
