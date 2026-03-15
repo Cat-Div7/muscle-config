@@ -290,7 +290,7 @@ Welcome screen
 | Framework         | React + TypeScript, React + JavaScript             | Next.js, Vue, Svelte               |
 | Styling           | Tailwind CSS v4, MUI, Plain CSS, None              | —                                  |
 | Architecture      | Feature-based, Layered, Skip                       | —                                  |
-| Formatter         | Prettier (with Tailwind plugin merge)              | ESLint config                      |
+| Formatter         | Prettier (with Tailwind plugin merge)              | ESLint config (if needed)          |
 | Version Control   | Git init, Initial commit                           | —                                  |
 | Path Aliases      | —                                                  | @components, @hooks, @pages, etc.. |
 | Optional Libraries| —                                                  | axios, lucide-react, framer-motion, etc.. |
