@@ -30,6 +30,7 @@ export interface ProjectConfig {
   styling: StylingChoice;
   architecture: ArchitectureConfig;
   prettier: PrettierConfig;
+  git?: GitConfig;
 }
 
 export interface TailwindConfig {
@@ -77,4 +78,9 @@ export interface PrettierConfig {
   singleQuote: boolean;
   semi: boolean;
   tabWidth: 2 | 4;
+}
+
+export interface GitConfig {
+  init: boolean;
+  initialCommit: boolean;
 }

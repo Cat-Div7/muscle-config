@@ -33,6 +33,8 @@ import { rollbackProject } from "../utils/rollback.js";
 import { logger } from "../utils/logger.js";
 import { askPrettierConfig } from "../prompts/prettier.prompt.js";
 import { prettierFeature } from "../features/prettier.feature.js";
+import { askGitConfig } from "../prompts/git.prompt.js";
+import { gitFeature } from "../features/git.feature.js";
 
 export async function createProject() {
   // Step 1: Directory mode
@@ -63,6 +65,9 @@ export async function createProject() {
   // Step 6: Prettier config
   const prettierConfig = await askPrettierConfig();
 
+  // Step 7: Git initialize
+  const gitConfig = await askGitConfig();
+
   // Build config object
   const config: ProjectConfig = {
     projectName,
@@ -71,6 +76,7 @@ export async function createProject() {
     styling,
     architecture,
     prettier: prettierConfig,
+    git: gitConfig,
   };
 
   const projectPath =
@@ -98,6 +104,9 @@ export async function createProject() {
       features.push(createArchitectureFeature(architecture));
 
     if (prettierConfig.enabled) features.push(prettierFeature(prettierConfig));
+
+    // Ask the git init in the end
+    features.push(gitFeature(config.git!));
 
     // Run each feature sequentially
     for (const feature of features) {
