@@ -1,0 +1,30 @@
+# Source files — not needed in the published package
+src/
+
+# TypeScript config
+tsconfig.json
+
+# Dev/editor config
+.vscode/
+.idea/
+*.code-workspace
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+
+# Local env
+.env
+.env.*
+
+# Git
+.git/
+.gitignore
+
+# Misc
+*.md
+!README.md

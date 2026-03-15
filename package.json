@@ -1,7 +1,7 @@
 {
   "name": "muscle-config",
   "version": "1.0.0",
-  "description": "",
+  "description": "Stop configuring. Start building.",
   "main": "dist/index.js",
   "type": "module",
   "scripts": {
@@ -12,9 +12,35 @@
   "bin": {
     "muscle-config": "./dist/index.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "cli",
+    "scaffold",
+    "react",
+    "vite",
+    "tailwind",
+    "mui",
+    "typescript",
+    "frontend",
+    "boilerplate",
+    "starter",
+    "template"
+  ],
+  "author": "Cat-Div7",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Cat-Div7/muscle-config.git"
+  },
+  "homepage": "https://github.com/Cat-Div7/muscle-config#readme",
+  "bugs": {
+    "url": "https://github.com/Cat-Div7/muscle-config/issues"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "dependencies": {
     "chalk": "^5.6.2",
     "execa": "^9.6.1",
