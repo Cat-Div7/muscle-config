@@ -31,6 +31,8 @@ import type {
 import { checkCurrentDirectory } from "../utils/directory.js";
 import { rollbackProject } from "../utils/rollback.js";
 import { logger } from "../utils/logger.js";
+import { askPrettierConfig } from "../prompts/prettier.prompt.js";
+import { prettierFeature } from "../features/prettier.feature.js";
 
 export async function createProject() {
   // Step 1: Directory mode
@@ -58,6 +60,9 @@ export async function createProject() {
   // Step 5: Architecture layout
   const architecture = await askArchitecture();
 
+  // Step 6: Prettier config
+  const prettierConfig = await askPrettierConfig();
+
   // Build config object
   const config: ProjectConfig = {
     projectName,
@@ -65,6 +70,7 @@ export async function createProject() {
     directoryMode,
     styling,
     architecture,
+    prettier: prettierConfig,
   };
 
   const projectPath =
@@ -90,6 +96,8 @@ export async function createProject() {
 
     if (architecture.style !== "skip")
       features.push(createArchitectureFeature(architecture));
+
+    if (prettierConfig.enabled) features.push(prettierFeature(prettierConfig));
 
     // Run each feature sequentially
     for (const feature of features) {

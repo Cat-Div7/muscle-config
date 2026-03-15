@@ -29,6 +29,7 @@ export interface ProjectConfig {
   directoryMode: DirectoryMode;
   styling: StylingChoice;
   architecture: ArchitectureConfig;
+  prettier: PrettierConfig;
 }
 
 export interface TailwindConfig {
@@ -69,4 +70,11 @@ export interface ArchitectureConfig {
   featureFolders: FolderChoice[]; // folders inside each feature
   sharedFolders: FolderChoice[]; // folders in src/ root
   indexFiles: FolderChoice[]; // folders to add index.ts/js in
+}
+
+export interface PrettierConfig {
+  enabled: boolean;
+  singleQuote: boolean;
+  semi: boolean;
+  tabWidth: 2 | 4;
 }
