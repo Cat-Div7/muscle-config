@@ -283,17 +283,20 @@ Welcome screen
 
 ---
 
-## 🛠 Supported Options
+ ## 🛠 Supported Options
 
-| Category          | Options                              |
-|-------------------|--------------------------------------|
-| Framework         | React, Next.js                       |
-| Language          | TypeScript, JavaScript               |
-| Styling           | Tailwind CSS, MUI, Normal CSS        |
-| Routing           | React Router DOM                     |
-| State Management  | Context API, Zustand                 |
-| Architecture      | Feature-based, Layered               |
-| Extra Directories | hooks/, services/, ui/, layouts/, types/, utils/ |
+| Category          | Available Now                                      | Coming Soon                        |
+|-------------------|----------------------------------------------------|------------------------------------|
+| Framework         | React + TypeScript, React + JavaScript             | Next.js, Vue, Svelte               |
+| Styling           | Tailwind CSS v4, MUI, Plain CSS, None              | —                                  |
+| Architecture      | Feature-based, Layered, Skip                       | —                                  |
+| Formatter         | Prettier (with Tailwind plugin merge)              | ESLint config                      |
+| Version Control   | Git init, Initial commit                           | —                                  |
+| Path Aliases      | —                                                  | @components, @hooks, @pages, etc.. |
+| Optional Libraries| —                                                  | axios, lucide-react, framer-motion, etc.. |
+| State Management  | —                                                  | Zustand, Context API boilerplate   |
+| Routing           | —                                                  | React Router DOM                   |
+| Templates         | —                                                  | Custom template support            |
 
 ---
 
