@@ -2,17 +2,25 @@
 
 > Frontend scaffolding done right, every time.
 
+<p align="center">
+  <img alt="npm version" src="https://img.shields.io/npm/v/muscle-config?style=for-the-badge&color=CB3837&logo=npm&logoColor=white" />
+  <img alt="npm downloads" src="https://img.shields.io/npm/dm/muscle-config?style=for-the-badge&color=2ea043&logo=npm&logoColor=white" />
+  <img alt="license" src="https://img.shields.io/github/license/Cat-Div7/muscle-config?style=for-the-badge&color=blue" />
+  <img alt="last commit" src="https://img.shields.io/github/last-commit/Cat-Div7/muscle-config?style=for-the-badge&color=6e40c9&logo=github&logoColor=white" />
+  <img alt="PRs welcome" src="https://img.shields.io/badge/PRs-welcome-brightgreen?style=for-the-badge&logo=github&logoColor=white" />
+</p>
+
 `muscle-config` is a CLI tool that scaffolds production-ready frontend projects with a clean, opinionated folder structure — picking your framework, language, styling, routing, state management, and architecture in one guided setup.
 
 ---
 
-## Quick Start (Not Available for now yet)
+## Quick Start
 
 ```bash
 npx muscle-config
 ```
 
-No installation required.
+> No installation required.
 
 ---
 
@@ -22,9 +30,9 @@ Instead of spending hours setting up a new project from scratch, `muscle-config`
 
 - The right folder structure for your chosen architecture
 - All necessary dependencies installed
-- Config files pre-configured (TypeScript, ESLint, path aliases, etc.)
+- Config files pre-configured (TypeScript, Prettier, etc.)
 - Component library setup (MUI, Tailwind, Normal CSS)
-- Routing, state management, and service layers scaffolded out of the box
+- Git repository initialized with an initial commit
 
 ---
 
@@ -37,6 +45,7 @@ If anything fails mid-installation, `muscle-config` automatically rolls back and
 ## How It Works
 
 `muscle-config` asks you a series of questions and generates a complete, ready-to-code frontend project in seconds.
+
 ```
 1. Where to create    → new folder or current directory
 2. Project name       → only if new folder
@@ -54,6 +63,7 @@ Each choice builds on the previous one. When done, you get a fully scaffolded pr
 ---
 
 ## CLI Flow (For More Details)
+
 ```
 Welcome screen
 │
@@ -283,24 +293,25 @@ Welcome screen
 
 ---
 
- ## 🛠 Supported Options
+## 🛠 Supported Options
 
-| Category          | Available Now                                      | Coming Soon                        |
-|-------------------|----------------------------------------------------|------------------------------------|
-| Framework         | React + TypeScript, React + JavaScript             | Next.js, Vue, Svelte               |
-| Styling           | Tailwind CSS v4, MUI, Plain CSS, None              | —                                  |
-| Architecture      | Feature-based, Layered, Skip                       | —                                  |
-| Formatter         | Prettier (with Tailwind plugin merge)              | ESLint config (if needed)          |
-| Version Control   | Git init, Initial commit                           | —                                  |
-| Path Aliases      | —                                                  | @components, @hooks, @pages, etc.. |
-| Optional Libraries| —                                                  | axios, lucide-react, framer-motion, etc.. |
-| State Management  | —                                                  | Zustand, Context API boilerplate   |
-| Routing           | —                                                  | React Router DOM                   |
-| Templates         | —                                                  | Custom template support            |
+| Category           | Available Now                          | Coming Soon                               |
+| ------------------ | -------------------------------------- | ----------------------------------------- |
+| Framework          | React + TypeScript, React + JavaScript | Next.js, Vue, Svelte                      |
+| Styling            | Tailwind CSS v4, MUI, Plain CSS, None  | —                                         |
+| Architecture       | Feature-based, Layered, Skip           | —                                         |
+| Formatter          | Prettier (with Tailwind plugin merge)  | ESLint config (if needed)                 |
+| Version Control    | Git init, Initial commit               | —                                         |
+| Path Aliases       | —                                      | @components, @hooks, @pages, etc..        |
+| Optional Libraries | —                                      | axios, lucide-react, framer-motion, etc.. |
+| State Management   | —                                      | Zustand, Context API boilerplate          |
+| Routing            | —                                      | React Router DOM                          |
+| Templates          | —                                      | Custom template support                   |
 
 ---
 
 ## 🗂 Example Output Structure
+
 ```
 my-app/
 ├── src/
@@ -349,6 +360,7 @@ my-app/
 ---
 
 ## Project Structure (This Repo)
+
 ```
 muscle-config/
 ├── src/
@@ -410,3 +422,9 @@ muscle-config/
 ├── tsconfig.json
 └── README.md
 ```
+
+---
+
+## License
+
+MIT © [Cat-Div7](https://github.com/Cat-Div7)
