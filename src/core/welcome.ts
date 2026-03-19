@@ -37,9 +37,13 @@ export async function welcome(): Promise<void> {
 
   const width: number = 62;
   const divider: string = chalk.cyan("─".repeat(width));
-  const githubLink: string = terminalLink(
+  const omarGithubLink: string = terminalLink(
     "Omar Ashraf",
     "https://github.com/Cat-Div7",
+  );
+  const mostafaGithubLink: string = terminalLink(
+    "Mostafa Ali",
+    "https://github.com/Mostafa-cmd-911",
   );
 
   console.log(divider);
@@ -48,10 +52,12 @@ export async function welcome(): Promise<void> {
   console.log(
     chalk.dim(`  v${version}`) +
       chalk.dim("                        by ") +
-      chalk.cyan(githubLink),
+      chalk.cyan(`${omarGithubLink} & ${mostafaGithubLink}`),
   );
   console.log(divider);
   console.log("\n");
 
-  console.log(chalk.red('The Only Available Frontend Framework for now is [ React ]!!\n'))
+  console.log(
+    chalk.red("The Only Available Frontend Framework for now is [ React ]!!\n"),
+  );
 }
