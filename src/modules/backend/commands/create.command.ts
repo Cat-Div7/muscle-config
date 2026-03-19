@@ -1,65 +1,50 @@
-import * as p from "@clack/prompts";
-import pc from "picocolors";
 import path from "path";
-import { execa } from "execa"; 
 import { askQuestions } from "../prompts/index.js";
 import {
-    generateExpressBase,
-    generateServerFiles,
+  generateExpressBase,
+  generateServerFiles,
 } from "../generators/express.generator.js";
 import { generateDatabaseConfig } from "../generators/database.generator.js";
 import { generateArchitecture } from "../generators/architecture.generator.js";
+import { spinner } from "../../../core/spinner.js";
+import { logger } from "../../../core/logger.js";
+import { installPackages } from "../../../core/install.js";
 
-async function installDependencies(projectPath: string) {
-    const s = p.spinner();
-    s.start(pc.cyan("Installing dependencies (npm install)..."));
-    try {
-        await execa("npm", ["install"], {
-            cwd: projectPath,
-            stdio: "inherit", 
-        });
-        s.stop(pc.green("✅ Dependencies installed successfully!"));
-    } catch (error) {
-        s.stop(pc.yellow("⚠️ Failed to install dependencies automatically."));
-        p.note(
-            "You might need to run 'npm install' manually inside the project folder.",
-        );
+export async function createBackendProject() {
+  const config = await askQuestions();
+  const projectPath = path.resolve(process.cwd(), config.projectName);
+
+  try {
+    spinner.start("Generating project files...");
+    await generateExpressBase(config);
+    await generateServerFiles(config);
+    spinner.succeed("Project files generated!");
+
+    if (config.database === "mongodb") {
+      spinner.start("Setting up database config...");
+      await generateDatabaseConfig(config);
+      spinner.succeed("Database config ready!");
     }
-}
 
-export async function createCommand() {
-    console.clear();
-    p.intro(`${pc.bgCyan(pc.black(" MUSCLE CLI "))} ${pc.dim("v1.0.0")}`);
+    spinner.start("Generating architecture...");
+    await generateArchitecture(config);
+    spinner.succeed("Architecture generated!");
 
-    const config = await askQuestions();
-    const projectPath = path.resolve(process.cwd(), config.projectName);
+    spinner.start("Installing dependencies — do not cancel this step...");
+    await installPackages(
+      ["express", "dotenv", "cors", "helmet", "morgan"],
+      projectPath,
+    );
+    spinner.succeed("Dependencies installed!");
 
-    const s = p.spinner();
-    s.start("Generating project files...");
-
-    try {
-        await generateExpressBase(config);
-        await generateServerFiles(config);
-
-        if (config.database === "mongodb") {
-            await generateDatabaseConfig(config);
-        }
-
-        await generateArchitecture(config);
-
-        s.stop(pc.green("✅ Files generated!"));
-
-        await installDependencies(projectPath);
-
-        const nextSteps = `
-  ${pc.cyan("cd")} ${config.projectName}
-  ${pc.cyan("npm run dev")}
-        `;
-
-        p.note(nextSteps, "Next steps:");
-        p.outro(pc.magenta("Happy coding, Mustafa! 🚀"));
-    } catch (error) {
-        s.stop(pc.red("❌ Something went wrong."));
-        console.error(error);
-    }
+    console.log("");
+    logger.success("Backend project created successfully!");
+    logger.dim("  Get started:");
+    logger.dim(`  cd ${config.projectName} && npm run dev`);
+    console.log("\n");
+  } catch (error) {
+    spinner.fail("Something went wrong.");
+    logger.error("Project creation failed.");
+    process.exit(1);
+  }
 }
