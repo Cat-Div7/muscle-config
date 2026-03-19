@@ -1,24 +1,28 @@
 import fs from "fs/promises";
 import path from "path";
+import { fileURLToPath } from "url";
 import { ProjectConfig } from "../config/projectConfig.js";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const TEMPLATES_DIR = path.resolve(__dirname, "../templates");
 
 export async function generateArchitecture(config: ProjectConfig) {
   const projectPath = path.resolve(process.cwd(), config.projectName);
   const srcPath = path.join(projectPath, "src");
   const isTS = config.language === "ts";
   const ext = isTS ? "ts" : "js";
+  const templateExt = isTS ? "ts" : "js";
 
-  const userController = isTS
-    ? `import { Request, Response } from 'express';\n\nexport const getUsers = async (req: Request, res: Response) => {\n  res.json({ status: 'success', data: [{ id: 1, name: 'Muscle User' }] });\n};`
-    : `export const getUsers = async (req, res) => {\n  res.json({ status: 'success', data: [{ id: 1, name: 'Muscle User' }] });\n};`;
-
-  const userRoutes = `import { Router } from 'express';
-import * as userController from '../controllers/user.controller.js';
-
-const router = Router();
-router.get('/', userController.getUsers);
-
-export default router;`;
+  const [userController, userRoutes] = await Promise.all([
+    fs.readFile(
+      path.join(TEMPLATES_DIR, `framework/user.controller.${templateExt}`),
+      "utf-8",
+    ),
+    fs.readFile(
+      path.join(TEMPLATES_DIR, `framework/user.routes.${templateExt}`),
+      "utf-8",
+    ),
+  ]);
 
   await fs.writeFile(
     path.join(srcPath, `controllers/user.controller.${ext}`),

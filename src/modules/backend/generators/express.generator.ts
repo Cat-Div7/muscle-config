@@ -1,6 +1,10 @@
 import fs from "fs/promises";
 import path from "path";
+import { fileURLToPath } from "url";
 import { ProjectConfig } from "../config/projectConfig.js";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const TEMPLATES_DIR = path.resolve(__dirname, "../templates");
 
 export async function generateExpressBase(config: ProjectConfig) {
   const projectPath = path.resolve(process.cwd(), config.projectName);
@@ -87,67 +91,33 @@ export async function generateServerFiles(config: ProjectConfig) {
   const srcPath = path.join(projectPath, "src");
   const isTS = config.language === "ts";
   const ext = isTS ? "ts" : "js";
+  const templateExt = isTS ? "ts" : "js";
 
-  const appCode = `
-import express from 'express';
-import cors from 'cors';
-import helmet from 'helmet';
-import morgan from 'morgan';
-import dotenv from 'dotenv';
+  // Read app template and inject project name
+  const appTemplate = await fs.readFile(
+    path.join(TEMPLATES_DIR, `framework/app.${templateExt}`),
+    "utf-8",
+  );
+  const appCode = appTemplate.replace(/{{PROJECT_NAME}}/g, config.projectName);
 
-dotenv.config();
+  // Read server template and inject db import/connect lines
+  const serverTemplate = await fs.readFile(
+    path.join(TEMPLATES_DIR, `framework/server.${templateExt}`),
+    "utf-8",
+  );
 
-const app = express();
+  const dbImport =
+    config.database !== "none"
+      ? "import { connectDB } from './config/db.js';"
+      : "";
+  const dbConnect =
+    config.database !== "none"
+      ? "await connectDB();"
+      : "// No database selected";
 
-// Middlewares
-app.use(helmet());
-app.use(cors());
-app.use(morgan('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-// Health Check Route
-app.get('/', (req, res) => {
-  res.json({
-    message: 'Welcome to ${config.projectName} API',
-    status: 'Server is up and running'
-  });
-});
-
-// 404 Handler
-app.use((req, res) => {
-  res.status(404).json({ error: 'Route not found' });
-});
-
-// Global Error Handler
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({ error: 'Internal Server Error' });
-});
-
-export default app;
-`.trim();
-
-  const serverCode = `
-import app from './app.js';
-${config.database !== "none" ? "import { connectDB } from './config/db.js';" : ""}
-
-const PORT = process.env.PORT || 3000;
-
-const startServer = async () => {
-  try {
-    ${config.database !== "none" ? "await connectDB();" : "// No database selected"}
-    app.listen(PORT, () => {
-      console.log(\`🚀 Server is running on http://localhost:\${PORT}\`);
-    });
-  } catch (error) {
-    console.error('Failed to start server:', error);
-    process.exit(1);
-  }
-};
-
-startServer();
-`.trim();
+  const serverCode = serverTemplate
+    .replace("{{DB_IMPORT}}", dbImport)
+    .replace("{{DB_CONNECT}}", dbConnect);
 
   await fs.writeFile(path.join(srcPath, `app.${ext}`), appCode);
   await fs.writeFile(path.join(srcPath, `server.${ext}`), serverCode);
