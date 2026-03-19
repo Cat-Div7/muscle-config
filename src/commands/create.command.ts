@@ -1,8 +1,8 @@
 import path from "path";
 
 // Prompts
-import { askDirectoryMode } from "../modules/frontend/prompts/directory.prompt.js";
-import { askProjectName } from "../modules/frontend/prompts/projectName.prompt.js";
+import { askDirectoryMode } from "./directory.prompt.js";
+import { askProjectName } from "./projectName.prompt.js";
 import { askFramework } from "../modules/frontend/prompts/framework.prompt.js";
 import { askStyling } from "../modules/frontend/prompts/styling.prompt.js";
 import { askTailwindConfig } from "../modules/frontend/prompts/tailwind.prompt.js";
