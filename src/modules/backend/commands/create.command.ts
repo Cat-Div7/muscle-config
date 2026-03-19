@@ -45,6 +45,7 @@ export async function createBackendProject() {
   } catch (error) {
     spinner.fail("Something went wrong.");
     logger.error("Project creation failed.");
+    // console.log(error) // Debugging
     process.exit(1);
   }
 }
