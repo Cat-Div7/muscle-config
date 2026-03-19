@@ -15,5 +15,6 @@
     "node_modules",
     "dist",
     "src/modules/frontend/templates",
+    "src/modules/backend/templates"
   ]
 }
