@@ -25,7 +25,7 @@ import type {
   TailwindConfig,
   MuiConfig,
   CssConfig,
-} from "../../../config/projectConfig.js";
+} from "../config/projectConfig.js";
 
 // Utils
 import { checkCurrentDirectory } from "../../../core/directory.js";

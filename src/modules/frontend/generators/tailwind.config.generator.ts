@@ -1,4 +1,4 @@
-import type { TailwindConfig } from "../../../config/projectConfig.js";
+import type { TailwindConfig } from "../config/projectConfig.js";
 
 export function generateTailwindConfig(config: TailwindConfig): string {
   const darkMode = config.darkMode ? `darkMode: "${config.darkMode}",` : "";

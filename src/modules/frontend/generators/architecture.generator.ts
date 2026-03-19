@@ -1,6 +1,6 @@
 import fs from "fs/promises";
 import path from "path";
-import type { ArchitectureConfig } from "../../../config/projectConfig.js";
+import type { ArchitectureConfig } from "../config/projectConfig.js";
 
 // ─── Helpers ───
 async function createFolder(folderPath: string): Promise<void> {

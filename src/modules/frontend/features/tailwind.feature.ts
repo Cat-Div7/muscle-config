@@ -5,7 +5,7 @@ import { fileURLToPath } from "url";
 import { spinner } from "../../../core/spinner.js";
 import { logger } from "../../../core/logger.js";
 import type { Feature } from "../../../core/feature.interface.js";
-import type { TailwindConfig } from "../../../config/projectConfig.js";
+import type { TailwindConfig } from "../config/projectConfig.js";
 import { generateIndexCss } from "../generators/css.generator.js";
 import { generateThemeToggle } from "../generators/toggle.generator.js";
 import { generateTailwindConfig } from "../generators/tailwind.config.generator.js";

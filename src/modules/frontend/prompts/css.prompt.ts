@@ -1,6 +1,6 @@
 import inquirer from "inquirer";
 import chalk from "chalk";
-import type { CssConfig } from "../../../config/projectConfig.js";
+import type { CssConfig } from "../config/projectConfig.js";
 
 const colorChoices = [
   {

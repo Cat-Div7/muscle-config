@@ -2,7 +2,7 @@ import { execa } from "execa";
 import { spinner } from "../../../core/spinner.js";
 import { logger } from "../../../core/logger.js";
 import type { Feature } from "../../../core/feature.interface.js";
-import type { GitConfig } from "../../../config/projectConfig.js";
+import type { GitConfig } from "../config/projectConfig.js";
 import { rollbackFeature } from "../../../core/rollback.js";
 import path from "path";
 

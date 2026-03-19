@@ -2,7 +2,7 @@ import inquirer from "inquirer";
 import type {
   ArchitectureConfig,
   FolderChoice,
-} from "../../../config/projectConfig.js";
+} from "../config/projectConfig.js";
 
 const allFolderChoices = [
   { name: "components", value: "components" },

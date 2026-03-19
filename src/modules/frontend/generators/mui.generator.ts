@@ -1,4 +1,4 @@
-import type { MuiConfig } from "../../../config/projectConfig.js";
+import type { MuiConfig } from "../config/projectConfig.js";
 
 // ─── Helpers ───
 const colorMap: Record<string, string> = {

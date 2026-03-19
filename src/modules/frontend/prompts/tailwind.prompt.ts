@@ -1,6 +1,6 @@
 import inquirer from "inquirer";
 import chalk from "chalk";
-import type { TailwindConfig } from "../../../config/projectConfig.js";
+import type { TailwindConfig } from "../config/projectConfig.js";
 
 const colorChoices = [
   {

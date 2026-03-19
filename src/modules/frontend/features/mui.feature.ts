@@ -5,7 +5,7 @@ import { fileURLToPath } from "url";
 import { spinner } from "../../../core/spinner.js";
 import { logger } from "../../../core/logger.js";
 import type { Feature } from "../../../core/feature.interface.js";
-import type { MuiConfig } from "../../../config/projectConfig.js";
+import type { MuiConfig } from "../config/projectConfig.js";
 import {
   generateMuiTheme,
   generateMuiThemeToggle,
