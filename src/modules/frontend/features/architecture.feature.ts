@@ -1,11 +1,11 @@
 import fs from "fs/promises";
 import path from "path";
-import { spinner } from "../utils/spinner.js";
-import { logger } from "../utils/logger.js";
-import type { Feature } from "./feature.interface.js";
+import { spinner } from "../../../core/spinner.js";
+import { logger } from "../../../core/logger.js";
+import type { Feature } from "../../../core/feature.interface.js";
 import type { ArchitectureConfig } from "../../../config/projectConfig.js";
 import { generateArchitecture } from "../generators/architecture.generator.js";
-import { rollbackFeature } from "../utils/rollback.js";
+import { rollbackFeature } from "../../../core/rollback.js";
 
 export function createArchitectureFeature(config: ArchitectureConfig): Feature {
   return {

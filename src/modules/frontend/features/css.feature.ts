@@ -1,9 +1,9 @@
 import fs from "fs/promises";
 import path from "path";
 import { fileURLToPath } from "url";
-import { spinner } from "../utils/spinner.js";
-import { logger } from "../utils/logger.js";
-import type { Feature } from "./feature.interface.js";
+import { spinner } from "../../../core/spinner.js";
+import { logger } from "../../../core/logger.js";
+import { Feature } from "../../../core/feature.interface.js";
 import type { CssConfig } from "../../../config/projectConfig.js";
 import {
   generateCssReset,
@@ -17,7 +17,7 @@ import {
   saveSnapshot,
   restoreSnapshots,
   rollbackFeature,
-} from "../utils/rollback.js";
+} from "../../../core/rollback.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 

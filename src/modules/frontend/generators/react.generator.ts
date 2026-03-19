@@ -1,7 +1,7 @@
 import { execa } from "execa";
 import type { ProjectConfig } from "../../../config/projectConfig.js";
-import { logger } from "../utils/logger.js";
-import { spinner } from "../utils/spinner.js";
+import { logger } from "../../../core/logger.js";
+import { spinner } from "../../../core/spinner.js";
 import path from "path";
 
 export async function generateReactProject(config: ProjectConfig) {

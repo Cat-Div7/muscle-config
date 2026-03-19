@@ -28,9 +28,9 @@ import type {
 } from "../../../config/projectConfig.js";
 
 // Utils
-import { checkCurrentDirectory } from "../utils/directory.js";
-import { rollbackProject } from "../utils/rollback.js";
-import { logger } from "../utils/logger.js";
+import { checkCurrentDirectory } from "../../../core/directory.js";
+import { rollbackProject } from "../../../core/rollback.js";
+import { logger } from "../../../core/logger.js";
 import { askPrettierConfig } from "../prompts/prettier.prompt.js";
 import { prettierFeature } from "../features/prettier.feature.js";
 import { askGitConfig } from "../prompts/git.prompt.js";

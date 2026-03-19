@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import { createProject } from "./modules/frontend/commands/create.command.js";
-import { welcome } from "./utils/welcome.js";
+import { welcome } from "./core/welcome.js";
 
 const main = async () => {
   await welcome();

@@ -2,9 +2,9 @@ import { execa } from "execa";
 import fs from "fs/promises";
 import path from "path";
 import { fileURLToPath } from "url";
-import { spinner } from "../utils/spinner.js";
-import { logger } from "../utils/logger.js";
-import type { Feature } from "./feature.interface.js";
+import { spinner } from "../../../core/spinner.js";
+import { logger } from "../../../core/logger.js";
+import type { Feature } from "../../../core/feature.interface.js";
 import type { TailwindConfig } from "../../../config/projectConfig.js";
 import { generateIndexCss } from "../generators/css.generator.js";
 import { generateThemeToggle } from "../generators/toggle.generator.js";
@@ -13,8 +13,8 @@ import {
   restoreSnapshots,
   rollbackFeature,
   saveSnapshot,
-} from "../utils/rollback.js";
-import { installPackages } from "../utils/install.js";
+} from "../../../core/rollback.js";
+import { installPackages } from "../../../core/install.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
