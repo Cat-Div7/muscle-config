@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc && shx rm -rf dist/modules/frontend/templates && shx cp -r src/modules/frontend/templates dist/modules/frontend/templates",
+    "build": "tsc && shx rm -rf dist/modules/frontend/templates && shx cp -r src/modules/frontend/templates dist/modules/frontend/templates && shx rm -rf dist/modules/backend/templates && shx cp -r src/modules/backend/templates dist/modules/backend/templates",
     "start": "node dist/index.js"
   },
   "bin": {
