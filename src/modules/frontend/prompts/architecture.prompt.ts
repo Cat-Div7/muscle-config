@@ -1,5 +1,8 @@
 import inquirer from "inquirer";
-import type { ArchitectureConfig, FolderChoice } from "../config/projectConfig.js";
+import type {
+  ArchitectureConfig,
+  FolderChoice,
+} from "../../../config/projectConfig.js";
 
 const allFolderChoices = [
   { name: "components", value: "components" },
@@ -35,8 +38,14 @@ export async function askArchitecture(): Promise<ArchitectureConfig> {
       name: "style",
       message: "Choose architecture style:",
       choices: [
-        { name: "Layered        (recommended for small/mid apps) - more popular", value: "layered" },
-        { name: "Feature-based  (recommended for large apps)", value: "feature-based" },
+        {
+          name: "Layered        (recommended for small/mid apps) - more popular",
+          value: "layered",
+        },
+        {
+          name: "Feature-based  (recommended for large apps)",
+          value: "feature-based",
+        },
         { name: "Skip", value: "skip" },
       ],
     },
@@ -86,7 +95,9 @@ export async function askArchitecture(): Promise<ArchitectureConfig> {
         message: "Select shared folders to generate in src/:",
         choices: allFolderChoices.map((f) => ({
           ...f,
-          checked: ["components", "hooks", "layouts", "pages"].includes(f.value),
+          checked: ["components", "hooks", "layouts", "pages"].includes(
+            f.value,
+          ),
         })),
       },
     ]);
@@ -143,4 +154,3 @@ export async function askArchitecture(): Promise<ArchitectureConfig> {
     indexFiles,
   };
 }
-

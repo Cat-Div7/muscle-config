@@ -1,5 +1,5 @@
 import inquirer from "inquirer";
-import type { PrettierConfig } from "../config/projectConfig.js";
+import type { PrettierConfig } from "../../../config/projectConfig.js";
 
 export async function askPrettierConfig(): Promise<PrettierConfig> {
   const { enabled } = await inquirer.prompt([

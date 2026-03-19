@@ -1,23 +1,23 @@
 import path from "path";
 
 // Prompts
-import { askDirectoryMode } from "../prompts/directory.prompt.js";
-import { askProjectName } from "../prompts/projectName.prompt.js";
-import { askFramework } from "../prompts/framework.prompt.js";
-import { askStyling } from "../prompts/styling.prompt.js";
-import { askTailwindConfig } from "../prompts/tailwind.prompt.js";
-import { askMuiConfig } from "../prompts/mui.prompt.js";
-import { askCssConfig } from "../prompts/css.prompt.js";
-import { askArchitecture } from "../prompts/architecture.prompt.js";
+import { askDirectoryMode } from "../modules/frontend/prompts/directory.prompt.js";
+import { askProjectName } from "../modules/frontend/prompts/projectName.prompt.js";
+import { askFramework } from "../modules/frontend/prompts/framework.prompt.js";
+import { askStyling } from "../modules/frontend/prompts/styling.prompt.js";
+import { askTailwindConfig } from "../modules/frontend/prompts/tailwind.prompt.js";
+import { askMuiConfig } from "../modules/frontend/prompts/mui.prompt.js";
+import { askCssConfig } from "../modules/frontend/prompts/css.prompt.js";
+import { askArchitecture } from "../modules/frontend/prompts/architecture.prompt.js";
 
 // Generators
-import { generateReactProject } from "../generators/react.generator.js";
+import { generateReactProject } from "../modules/frontend/generators/react.generator.js";
 
 // Features
-import { tailwindFeature } from "../features/tailwind.feature.js";
-import { muiFeature } from "../features/mui.feature.js";
-import { cssFeature } from "../features/css.feature.js";
-import { createArchitectureFeature } from "../features/architecture.feature.js";
+import { tailwindFeature } from "../modules/frontend/features/tailwind.feature.js";
+import { muiFeature } from "../modules/frontend/features/mui.feature.js";
+import { cssFeature } from "../modules/frontend/features/css.feature.js";
+import { createArchitectureFeature } from "../modules/frontend/features/architecture.feature.js";
 
 // Types
 import type {
@@ -31,10 +31,10 @@ import type {
 import { checkCurrentDirectory } from "../utils/directory.js";
 import { rollbackProject } from "../utils/rollback.js";
 import { logger } from "../utils/logger.js";
-import { askPrettierConfig } from "../prompts/prettier.prompt.js";
-import { prettierFeature } from "../features/prettier.feature.js";
-import { askGitConfig } from "../prompts/git.prompt.js";
-import { gitFeature } from "../features/git.feature.js";
+import { askPrettierConfig } from "../modules/frontend/prompts/prettier.prompt.js";
+import { prettierFeature } from "../modules/frontend/features/prettier.feature.js";
+import { askGitConfig } from "../modules/frontend/prompts/git.prompt.js";
+import { gitFeature } from "../modules/frontend/features/git.feature.js";
 
 export async function createProject() {
   // Step 1: Directory mode

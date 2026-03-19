@@ -1,4 +1,4 @@
-import type { MuiConfig } from "../config/projectConfig.js";
+import type { MuiConfig } from "../../../config/projectConfig.js";
 
 // ─── Helpers ───
 const colorMap: Record<string, string> = {
@@ -8,9 +8,12 @@ const colorMap: Record<string, string> = {
 };
 
 const fontImportMap: Record<string, string> = {
-  inter: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap",
-  poppins: "https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap",
-  cairo: "https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;700&display=swap",
+  inter:
+    "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap",
+  poppins:
+    "https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap",
+  cairo:
+    "https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;700&display=swap",
 };
 
 const fontFamilyMap: Record<string, string> = {

@@ -1,5 +1,5 @@
 import inquirer from "inquirer";
-import type { StylingChoice } from "../config/projectConfig.js";
+import type { StylingChoice } from "../../../config/projectConfig.js";
 
 export async function askStyling(): Promise<StylingChoice> {
   const { styling } = await inquirer.prompt([

@@ -1,8 +1,8 @@
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import ThemeToggle from "./components/ThemeToggle";
-import { useTheme } from "./context/ThemeContextProvider";
+import ThemeToggle from "./components/ThemeToggle.js";
+import { useTheme } from "./context/ThemeContextProvider.js";
 
 export default function App() {
   const { theme } = useTheme();

@@ -3,7 +3,7 @@ import path from "path";
 import { spinner } from "../utils/spinner.js";
 import { logger } from "../utils/logger.js";
 import type { Feature } from "./feature.interface.js";
-import type { PrettierConfig } from "../config/projectConfig.js";
+import type { PrettierConfig } from "../../../config/projectConfig.js";
 import { installPackages } from "../utils/install.js";
 import { rollbackFeature } from "../utils/rollback.js";
 
@@ -55,10 +55,7 @@ export function prettierFeature(config: PrettierConfig): Feature {
         const merged = { ...prettierConfig, ...existingConfig };
 
         spinner.start("Writing .prettierrc...");
-        await fs.writeFile(
-          prettierrcPath,
-          JSON.stringify(merged, null, 2),
-        );
+        await fs.writeFile(prettierrcPath, JSON.stringify(merged, null, 2));
         spinner.succeed(".prettierrc written!");
 
         /**

@@ -1,5 +1,5 @@
 import inquirer from "inquirer";
-import type { FrameworkChoice } from "../config/projectConfig.js";
+import type { FrameworkChoice } from "../../../config/projectConfig.js";
 
 export async function askFramework(): Promise<FrameworkChoice> {
   const { framework } = await inquirer.prompt([

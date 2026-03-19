@@ -3,13 +3,11 @@ import path from "path";
 import { spinner } from "../utils/spinner.js";
 import { logger } from "../utils/logger.js";
 import type { Feature } from "./feature.interface.js";
-import type { ArchitectureConfig } from "../config/projectConfig.js";
+import type { ArchitectureConfig } from "../../../config/projectConfig.js";
 import { generateArchitecture } from "../generators/architecture.generator.js";
 import { rollbackFeature } from "../utils/rollback.js";
 
-export function createArchitectureFeature(
-  config: ArchitectureConfig,
-): Feature {
+export function createArchitectureFeature(config: ArchitectureConfig): Feature {
   return {
     name: "architecture",
 
@@ -47,9 +45,7 @@ export function createArchitectureFeature(
         spinner.fail("Failed to setup architecture.");
         await rollbackFeature([
           path.join(projectPath, "src/features"),
-          ...config.sharedFolders.map((f) =>
-            path.join(projectPath, "src", f),
-          ),
+          ...config.sharedFolders.map((f) => path.join(projectPath, "src", f)),
         ]);
         throw error;
       }

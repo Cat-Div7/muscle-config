@@ -1,5 +1,5 @@
 import inquirer from "inquirer";
-import type { GitConfig } from "../config/projectConfig.js";
+import type { GitConfig } from "../../../config/projectConfig.js";
 
 export async function askGitConfig(): Promise<GitConfig> {
   const { init } = await inquirer.prompt([

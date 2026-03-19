@@ -1,4 +1,4 @@
-import type { TailwindConfig } from "../config/projectConfig.js";
+import type { TailwindConfig } from "../../../config/projectConfig.js";
 
 export function generateIndexCss(config: TailwindConfig): string {
   const lines: string[] = [];

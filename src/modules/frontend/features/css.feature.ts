@@ -4,7 +4,7 @@ import { fileURLToPath } from "url";
 import { spinner } from "../utils/spinner.js";
 import { logger } from "../utils/logger.js";
 import type { Feature } from "./feature.interface.js";
-import type { CssConfig } from "../config/projectConfig.js";
+import type { CssConfig } from "../../../config/projectConfig.js";
 import {
   generateCssReset,
   generateCssVariables,
