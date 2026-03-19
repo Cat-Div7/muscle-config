@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { createProject } from "./commands/create.command.js";
+import { createProject } from "./modules/frontend/commands/create.command.js";
 import { welcome } from "./utils/welcome.js";
 
 const main = async () => {
