@@ -58,6 +58,11 @@ export async function welcome(): Promise<void> {
   console.log("\n");
 
   console.log(
-    chalk.red("The Only Available Frontend Framework for now is [ React ]!!\n"),
+    chalk.red("The Only Available Frontend Framework for now is [ React ]!!"),
+  );
+  console.log(
+    chalk.red(
+      "The Only Available Backend Framework for now is [ Node.js (Express) ]!!\n",
+    ),
   );
 }
